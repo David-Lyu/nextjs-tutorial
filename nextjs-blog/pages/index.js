@@ -63,3 +63,4 @@ export default function Home({ allPostsData }) {
 
 //If you want to fetch data for the client do it on the client side
 //since SEO doesn't care about that and is private info.
+//They recommend using SWR that does caching validation tracking...
