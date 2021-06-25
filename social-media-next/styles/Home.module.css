@@ -49,6 +49,19 @@
   }
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  height: 20em;
+}
 .main > * {
   margin: 0 0 0.5em 0;
+  text-align: center;
+}
+
+.main section {
+  display: flex;
+  justify-content: space-evenly;
 }

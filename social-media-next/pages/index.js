@@ -2,8 +2,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Headers from '../components/header/header';
+import { useState } from 'react';
 
 export default function Home() {
+  const [isLoginShown, setIsLoginShown] = useState(false);
+
   return (
     <div className="container">
       <Head>
@@ -13,8 +16,16 @@ export default function Home() {
       </Head>
 
       <Headers></Headers>
-      <main className={styles.main}>
+      <main className={styles.main + ' row'}>
         <h1>Welcome to Social Media</h1>
+        <section>
+          <div className={styles.register}>
+            <h3> New please register</h3>
+          </div>
+          <div className={styles.login}>
+            <h3>Welcome back please login</h3>
+          </div>
+        </section>
       </main>
     </div>
   );
