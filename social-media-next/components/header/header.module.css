@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: mediumspringgreen;
+  max-height: 10em;
+}
+
+.nav > * {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.links {
+  display: flex;
+}
+
+.links > * {
+  padding: 0.5em;
+}
