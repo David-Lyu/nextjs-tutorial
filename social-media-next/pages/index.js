@@ -21,9 +21,45 @@ export default function Home() {
         <section>
           <div className={styles.register}>
             <h3> New please register</h3>
+            <form className={styles.form}>
+              <label>
+                Email
+                <input />
+              </label>
+              <label>
+                First Name
+                <input />
+              </label>
+              <label>
+                Last name
+                <input />
+              </label>
+              <label>
+                Phone number
+                <input />
+              </label>
+              <label>
+                Password
+                <input />
+              </label>
+              <label>
+                Confirm Password
+                <input />
+              </label>
+            </form>
           </div>
           <div className={styles.login}>
             <h3>Welcome back please login</h3>
+            <form className={styles.form}>
+              <label>
+                Email:
+                <input />
+              </label>
+              <label>
+                Password
+                <input />
+              </label>
+            </form>
           </div>
         </section>
       </main>
