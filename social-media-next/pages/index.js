@@ -7,6 +7,17 @@ import { useState } from 'react';
 export default function Home() {
   const [isLoginShown, setIsLoginShown] = useState(false);
 
+  //The functions to submit the forms
+  const onRegisterClick = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
+  const onLoginClick = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
   return (
     <div className="container">
       <Head>
@@ -46,6 +57,7 @@ export default function Home() {
                 Confirm Password
                 <input />
               </label>
+              <button onClick={onRegisterClick}>Submit</button>
             </form>
           </div>
           <div className={styles.login}>
@@ -59,6 +71,7 @@ export default function Home() {
                 Password
                 <input />
               </label>
+              <button onClick={onLoginClick}>Submit</button>
             </form>
           </div>
         </section>
