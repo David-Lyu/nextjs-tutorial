@@ -7,12 +7,20 @@ import { useState } from 'react';
 export default function Home() {
   const [isLoginShown, setIsLoginShown] = useState(false);
 
-  //The functions to submit the forms
+  /**
+   * The functions to submit the forms to register user.
+   * It should also clear the form input and possible store u/n & pass in local storage?
+   * Maybe not if I do email auth
+   */
   const onRegisterClick = (e) => {
     e.preventDefault();
     console.log(e);
   };
 
+  /**
+   * This method will check the backend and allow user to login.
+   * @param {*} e: The event triggered on the onSubmit.
+   */
   const onLoginClick = (e) => {
     e.preventDefault();
     console.log(e);
@@ -31,7 +39,7 @@ export default function Home() {
         <h1>Welcome to Social Media</h1>
         <section>
           <div className={styles.register}>
-            <h3> New please register</h3>
+            <h3> New? Please register</h3>
             <form className={styles.form}>
               <label>
                 Email
@@ -57,7 +65,7 @@ export default function Home() {
                 Confirm Password
                 <input />
               </label>
-              <button onClick={onRegisterClick}>Submit</button>
+              <button onSubmit={onRegisterClick}>Submit</button>
             </form>
           </div>
           <div className={styles.login}>
@@ -71,7 +79,7 @@ export default function Home() {
                 Password
                 <input />
               </label>
-              <button onClick={onLoginClick}>Submit</button>
+              <button onSubmit={onLoginClick}>Submit</button>
             </form>
           </div>
         </section>
