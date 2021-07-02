@@ -12,6 +12,7 @@
 
 .links {
   display: flex;
+  cursor: pointer;
 }
 
 .links > * {
