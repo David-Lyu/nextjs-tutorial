@@ -5,8 +5,24 @@ import Headers from '../components/header/header';
 import { useState } from 'react';
 
 export default function Home() {
+  //STATE/////////////////////////////////////////////
+  // this is for which form to show on smaller screens
   const [isLoginShown, setIsLoginShown] = useState(false);
 
+  //forms onChange method will be under the return statement
+  //this is the state for the Registration Form
+  const [regEmail, setRegEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [regPass, setRegPass] = useState('');
+  const [regPassVerify, setRegPassVerify] = useState('');
+
+  //this is the state for the login Form
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPass, setLoginPass] = useState('');
+
+  //METHODS////////////////////////////////////////////
   /**
    * The functions to submit the forms to register user.
    * It should also clear the form input and possible store u/n & pass in local storage?
@@ -26,6 +42,7 @@ export default function Home() {
     console.log(e);
   };
 
+  //RETURN
   return (
     <div className="container">
       <Head>
@@ -86,6 +103,18 @@ export default function Home() {
       </main>
     </div>
   );
+
+  //onChangeMethod
+  //register form onChange
+  const onRegEmailChange = () => {};
+  const onFirstNameChange = () => {};
+  const onLastNameChange = () => {};
+  const onRegPassChange = () => {};
+  const onRegPassVerifyChange = () => {};
+
+  //login form onChange
+  const onLoginEmailChange = () => {};
+  const onLoginPasswordChange = () => {};
 }
 
 //  <main className={styles.main}>
