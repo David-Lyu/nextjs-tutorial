@@ -8,6 +8,7 @@ export default function Home() {
   //STATE/////////////////////////////////////////////
   // this is for which form to show on smaller screens
   const [isLoginShown, setIsLoginShown] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   //forms onChange method will be under the return statement
   //this is the state for the Registration Form
@@ -28,8 +29,22 @@ export default function Home() {
    * It should also clear the form input and possible store u/n & pass in local storage?
    * Maybe not if I do email auth
    */
-  const onRegisterClick = (e) => {
+  const onRegisterSubmit = (e) => {
     e.preventDefault();
+    //need logic for when they resubmit
+    // if (errorMsg.length > 0) return setErrorMsg('');
+    // if (
+    //   !regEmail &&
+    //   !firstName &&
+    //   !lastName &&
+    //   !phoneNumber &&
+    //   !regPass &&
+    //   !regPassVerify
+    // ) {
+    //   return setErrorMsg('Fill out the entire form');
+    // } else {
+    //   setErrorMsg('');
+    // }
     console.log(e);
   };
 
@@ -37,8 +52,9 @@ export default function Home() {
    * This method will check the backend and allow user to login.
    * @param {*} e: The event triggered on the onSubmit.
    */
-  const onLoginClick = (e) => {
+  const onLoginSubmit = (e) => {
     e.preventDefault();
+    if (errorMsg.length > 0) return;
     console.log(e);
   };
 
@@ -60,29 +76,29 @@ export default function Home() {
             <form className={styles.form}>
               <label>
                 Email
-                <input />
+                <input onChange={onRegEmailChange} value={regEmail} />
               </label>
               <label>
                 First Name
-                <input />
+                <input onChange={onFirstNameChange} value={firstName} />
               </label>
               <label>
                 Last name
-                <input />
+                <input onChange={onLastNameChange} value={lastName} />
               </label>
               <label>
                 Phone number
-                <input />
+                <input onChange={onPhoneNumberChange} value={phoneNumber} />
               </label>
               <label>
                 Password
-                <input />
+                <input onChange={onRegPassChange} value={regPass} />
               </label>
               <label>
                 Confirm Password
-                <input />
+                <input onChange={onRegPassVerifyChange} value={regPassVerify} />
               </label>
-              <button onSubmit={onRegisterClick}>Submit</button>
+              <button onSubmit={onRegisterSubmit}>Submit</button>
             </form>
           </div>
           <div className={styles.login}>
@@ -96,7 +112,7 @@ export default function Home() {
                 Password
                 <input />
               </label>
-              <button onSubmit={onLoginClick}>Submit</button>
+              <button onSubmit={onLoginSubmit}>Submit</button>
             </form>
           </div>
         </section>
@@ -105,16 +121,30 @@ export default function Home() {
   );
 
   //onChangeMethod
-  //register form onChange
-  const onRegEmailChange = () => {};
-  const onFirstNameChange = () => {};
-  const onLastNameChange = () => {};
-  const onRegPassChange = () => {};
-  const onRegPassVerifyChange = () => {};
+  //register form onChange need validation
+  function onRegEmailChange(e) {
+    setRegEmail(e.currentTarget.value);
+  }
+  function onFirstNameChange(e) {
+    setFirstName(e.currentTarget.value);
+  }
+  function onLastNameChange(e) {
+    setLastName(e.currentTarget.value);
+  }
+  function onPhoneNumberChange(e) {
+    setPhoneNumber(e.currentTarget.value);
+  }
+  function onRegPassChange(e) {
+    setRegPass(e.currentTarget.value);
+  }
+  function onRegPassVerifyChange(e) {
+    setRegPassVerify(e.currentTarget.value);
+    //need another state to check password
+  }
 
   //login form onChange
-  const onLoginEmailChange = () => {};
-  const onLoginPasswordChange = () => {};
+  function onLoginEmailChange(e) {}
+  function onLoginPasswordChange(e) {}
 }
 
 //  <main className={styles.main}>
