@@ -33,9 +33,9 @@ export default function Home() {
    * Maybe not if I do email auth
    */
   const onRegisterSubmit = (e) => {
+    console.log(e);
     e.preventDefault();
     //need logic for when they resubmit
-    console.log(e);
   };
 
   /**
@@ -43,6 +43,7 @@ export default function Home() {
    * @param {*} e: The event triggered on the onSubmit.
    */
   const onLoginSubmit = (e) => {
+    console.log(e);
     e.preventDefault();
     if (errorMsg.length > 0) return;
     console.log(e);
@@ -63,7 +64,7 @@ export default function Home() {
         <section>
           <div className={styles.register}>
             <h3> New? Please register</h3>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onRegisterSubmit}>
               <label>
                 Email
                 <input onChange={onRegEmailChange} value={regEmail} />
@@ -88,12 +89,12 @@ export default function Home() {
                 Confirm Password
                 <input onChange={onRegPassVerifyChange} value={regPassVerify} />
               </label>
-              <button onSubmit={onRegisterSubmit}>Submit</button>
+              <button>Submit</button>
             </form>
           </div>
           <div className={styles.login}>
             <h3>Welcome back please login</h3>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onLoginSubmit}>
               <label>
                 Email:
                 <input onChange={onLoginEmailChange} value={loginEmail} />
@@ -102,7 +103,7 @@ export default function Home() {
                 Password
                 <input onChange={onLoginPasswordChange} value={loginPass} />
               </label>
-              <button onSubmit={onLoginSubmit}>Submit</button>
+              <button>Submit</button>
             </form>
           </div>
         </section>
