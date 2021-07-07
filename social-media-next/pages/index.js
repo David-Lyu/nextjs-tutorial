@@ -3,6 +3,9 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Headers from '../components/header/header';
 import { useState } from 'react';
+import UserLoginError, {
+  RegisterUserErrors
+} from '../model/error_message/UserFormError';
 
 export default function Home() {
   //STATE/////////////////////////////////////////////
@@ -32,19 +35,6 @@ export default function Home() {
   const onRegisterSubmit = (e) => {
     e.preventDefault();
     //need logic for when they resubmit
-    // if (errorMsg.length > 0) return setErrorMsg('');
-    // if (
-    //   !regEmail &&
-    //   !firstName &&
-    //   !lastName &&
-    //   !phoneNumber &&
-    //   !regPass &&
-    //   !regPassVerify
-    // ) {
-    //   return setErrorMsg('Fill out the entire form');
-    // } else {
-    //   setErrorMsg('');
-    // }
     console.log(e);
   };
 
@@ -106,11 +96,11 @@ export default function Home() {
             <form className={styles.form}>
               <label>
                 Email:
-                <input />
+                <input onChange={onLoginEmailChange} value={loginEmail} />
               </label>
               <label>
                 Password
-                <input />
+                <input onChange={onLoginPasswordChange} value={loginPass} />
               </label>
               <button onSubmit={onLoginSubmit}>Submit</button>
             </form>
@@ -123,28 +113,40 @@ export default function Home() {
   //onChangeMethod
   //register form onChange need validation
   function onRegEmailChange(e) {
-    setRegEmail(e.currentTarget.value);
+    const email = e.currentTarget.value;
+    setRegEmail(email);
   }
   function onFirstNameChange(e) {
-    setFirstName(e.currentTarget.value);
+    const firstName = e.currentTarget.value;
+    setFirstName(firstName);
   }
   function onLastNameChange(e) {
+    const lastName = e.currentTarget.value;
     setLastName(e.currentTarget.value);
   }
   function onPhoneNumberChange(e) {
-    setPhoneNumber(e.currentTarget.value);
+    const phoneNumber = e.currentTarget.value;
+    setPhoneNumber(phoneNumber);
   }
   function onRegPassChange(e) {
-    setRegPass(e.currentTarget.value);
+    const password = e.currentTarget.value;
+    setRegPass(password);
   }
   function onRegPassVerifyChange(e) {
-    setRegPassVerify(e.currentTarget.value);
+    const passwordVerify = e.currentTarget.value;
+    if (passwordVerify !== regPass) setErrorMsg('Password do not match');
+    if (passwordVerify === regPass) setErrorMsg('');
+    setRegPassVerify(passwordVerify);
     //need another state to check password
   }
 
   //login form onChange
-  function onLoginEmailChange(e) {}
-  function onLoginPasswordChange(e) {}
+  function onLoginEmailChange(e) {
+    setLoginEmail(e.currentTarget.value);
+  }
+  function onLoginPasswordChange(e) {
+    setLoginPass(e.currentTarget.value);
+  }
 }
 
 //  <main className={styles.main}>
