@@ -12,6 +12,7 @@ export default function Home() {
   // this is for which form to show on smaller screens
   const [isLoginShown, setIsLoginShown] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [userLoginError, setUserLoginError] = useState(UserLoginError);
 
   //forms onChange method will be under the return statement
   //this is the state for the Registration Form
