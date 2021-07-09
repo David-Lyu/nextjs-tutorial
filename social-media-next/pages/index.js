@@ -117,6 +117,7 @@ export default function Home() {
   function onRegEmailChange(e) {
     const email = e.currentTarget.value;
     setRegEmail(email);
+    // if(email.contains("<"))
   }
   function onFirstNameChange(e) {
     const firstName = e.currentTarget.value;
