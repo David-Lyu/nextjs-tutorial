@@ -94,7 +94,7 @@ export default function Home() {
                 <input
                   onChange={onPhoneNumberChange}
                   value={phoneNumber}
-                  type="phone_number"
+                  type="tel"
                 />
               </label>
               <label>
