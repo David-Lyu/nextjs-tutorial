@@ -34,7 +34,7 @@ export default function Home() {
    * Maybe not if I do email auth
    */
   const onRegisterSubmit = (e) => {
-    console.log(e);
+    console.log(e);console.log(e);
     e.preventDefault();
     //need logic for when they resubmit
   };
