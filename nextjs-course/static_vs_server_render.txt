@@ -1,0 +1,25 @@
+static generation generates the code during build process (npm run build)
+  - function called getStaticProps() {} prepare props for the page
+    - has to be in the pages folder
+    - problem:
+      - data could be out dated. Need to run npm run build
+        -fix:
+          - to fix this problem there is a property revalidate which takes a number in seconds to re fetch data
+          - can rebuild if there are not many changes every time
+
+  - can be async so can use async await
+
+  - is not executed on the client side since it is ran once on the build process
+    - so can reach a database etc...
+
+
+server side generation will always run in the server
+  - function called getServerSideProps {}
+    - has to be in the pages folder
+  - wait for html to be generated on every requests
+
+tldr
+  - static generation is great if you don't need to get a request every second
+    etc or need access to context.req
+
+  - server side generation is great if the data changes multiple times every second
