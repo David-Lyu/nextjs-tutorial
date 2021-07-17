@@ -1,17 +1,25 @@
 //can also do [meetupId].js in the pages directory. This is to show you can have
 // a file with a dynamic route too!
+import Head from 'next/head';
+
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 import { MeetupClient } from '../api/mongodb';
 import { ObjectId } from 'mongodb';
 
 function MeetupDetails({ meetupData }) {
   return (
-    <MeetupDetail
-      image={meetupData.image}
-      title={meetupData.title}
-      address={meetupData.address}
-      description={meetupData.description}
-    />
+    <>
+      <Head>
+        <title>{meetupData.title}</title>
+        <meta name="description" content={meetupData.description} />
+      </Head>
+      <MeetupDetail
+        image={meetupData.image}
+        title={meetupData.title}
+        address={meetupData.address}
+        description={meetupData.description}
+      />
+    </>
   );
 }
 
