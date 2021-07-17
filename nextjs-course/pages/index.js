@@ -1,21 +1,5 @@
 import MeetupList from '../components/meetups/MeetupList/MeetupList';
-
-const DUMMY_MEETUPS = [
-  {
-    id: 'm1',
-    title: 'first meetup',
-    image: 'stuff',
-    address: 'some address',
-    description: 'this is the first meetup'
-  },
-  {
-    id: 'm2',
-    title: 'second meetup',
-    image: 'more stuff',
-    address: 'some address 2',
-    description: 'this is the second meetup'
-  }
-];
+import { MeetupClient } from './api/mongodb';
 
 function HomePage(props) {
   return <MeetupList meetups={props.meetups}></MeetupList>;
@@ -27,9 +11,21 @@ export default HomePage;
 export async function getStaticProps() {
   //can have context parameter
   //fetch api data
+  const connectedMeetupClient = await MeetupClient.connect();
+  const db = await MeetupClient.db();
+  const meetupsCollection = await db.collection('Meetup');
+  const meetups = await meetupsCollection.find().toArray();
+
+  MeetupClient.close;
+
   return {
     props: {
-      meetups: DUMMY_MEETUPS
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        id: meetup._id.toString()
+      }))
     }
     // revalidate: 10
   };

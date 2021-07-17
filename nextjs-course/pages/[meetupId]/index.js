@@ -1,29 +1,36 @@
 //can also do [meetupId].js in the pages directory. This is to show you can have
 // a file with a dynamic route too!
 import MeetupDetail from '../../components/meetups/MeetupDetail';
+import { MeetupClient } from '../api/mongodb';
+import { ObjectId } from 'mongodb';
 
-function MeetupDetails(props) {
+function MeetupDetails({ meetupData }) {
   return (
     <MeetupDetail
-      image="asdf"
-      title="First Meetup"
-      address="Address, City"
-      description="This is a first meetup"
+      image={meetupData.image}
+      title={meetupData.title}
+      address={meetupData.address}
+      description={meetupData.description}
     />
   );
 }
 
 export async function getStaticProps(context) {
   //fetch data for a single meetup
-  console.log(context);
   const { meetupId } = context.params;
+  const connectedMeetupClient = await MeetupClient.connect();
+  const db = await MeetupClient.db();
+  const meetupsCollection = await db.collection('Meetup');
+  const meetup = await meetupsCollection.findOne({ _id: ObjectId(meetupId) });
+  MeetupClient.close;
   return {
     props: {
       meetupData: {
-        image: 'asdf',
-        title: 'First Meetup',
-        address: 'Address, City',
-        description: 'This is a first meetup'
+        id: meetup._id.toString(),
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        description: meetup.description
       }
     }
   };
@@ -31,20 +38,18 @@ export async function getStaticProps(context) {
 
 //needed for dynamic paths, [], AND using getStaticProps
 export async function getStaticPaths() {
+  const connectedMeetupClient = await MeetupClient.connect();
+  const db = await MeetupClient.db();
+  const meetupsCollection = await db.collection('Meetup');
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+  MeetupClient.close;
   return {
     fallback: false, // If false see a 404 error. If true will try to set up page dynamically
-    paths: [
-      {
-        params: {
-          meetupId: 'm1'
-        }
-      },
-      {
-        params: {
-          meetupId: 'm2'
-        }
+    paths: meetups.map((meetup) => ({
+      params: {
+        meetupId: meetup._id.toString()
       }
-    ]
+    }))
   };
 }
 
