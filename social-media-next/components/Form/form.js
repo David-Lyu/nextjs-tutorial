@@ -14,7 +14,7 @@ function Form({ inputs, formName }) {
   const numOfInputs = inputs.length;
   const createState = {};
   const onChange = {};
-  const errors = {};
+  const [errors, setErrors] = useState({});
 
   /*Creates state dynamically. Not good practice according to documentation,
   but upon further reading since the size of array never changes it should not
@@ -29,29 +29,18 @@ function Form({ inputs, formName }) {
   for (let i = 0; i < numOfInputs; i++) {
     onChange[i] = (e) => {
       const inputTag = e.currentTarget;
-      console.log(inputTag.type);
       if (!checkInputs(inputTag.value, inputTag.type, errors)) {
-        console.log('in inputs');
-        errors[i] = {
-          hasError: true,
-          message: `Incorrect format for type: ${inputTag.type} Please re-enter.`
-        };
-        // console.log(errors[i]);
+        setErrors({
+          ...errors,
+          [i]: {
+            hasError: true,
+            message: `Incorrect format for type: ${inputTag.type} Please re-enter.`
+          }
+        });
       }
       createState[i].setState(e.currentTarget.value);
     };
   }
-
-  // error state DOESN"T WORK CAUSE OF RE-RENDER might need a useEffect (DOESNT WORK after re render errors disappear)
-  //  did not use react hook useState because of infinite loop
-  //  caused by re-rendering every time this state changed, which it would change every time
-  //  in this loop, and then re-render and go back to this loop
-  useEffect(() => {
-    for (let i = 0; i < numOfInputs; i++) {
-      errors[i] = { hasError: false, message: '' };
-      // console.log(errors[i]);
-    }
-  }, []);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -73,7 +62,7 @@ function Form({ inputs, formName }) {
             value={createState[index.state]}
             onChange={onChange[index]}
           />
-          {errors[index] && !errors[index].hasError ? null : (
+          {!errors[index]?.hasError ? null : (
             <p>Error please use valid inputs</p>
           )}
         </div>
@@ -86,7 +75,7 @@ function Form({ inputs, formName }) {
 function checkInputs(value, type, errors) {
   //checks inputs
   console.log(errors);
-  return false;
+  return true;
 }
 
 export default Form;
