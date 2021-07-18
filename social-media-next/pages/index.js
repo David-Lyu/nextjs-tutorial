@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Headers from '../components/header/header';
+import Form from '../components/Form/form';
+
 import { useState } from 'react';
 import UserLoginError, {
   RegisterUserErrors
@@ -34,7 +36,8 @@ export default function Home() {
    * Maybe not if I do email auth
    */
   const onRegisterSubmit = (e) => {
-    console.log(e);console.log(e);
+    console.log(e);
+    console.log(e);
     e.preventDefault();
     //need logic for when they resubmit
   };
@@ -49,6 +52,20 @@ export default function Home() {
     if (errorMsg.length > 0) return;
     console.log(e);
   };
+
+  //Form components
+  const LOGIN_INPUTS = Object.freeze([
+    { label: 'Email', type: 'email' },
+    { label: 'Password', type: 'password' }
+  ]);
+  const SIGNUP_INPUTS = Object.freeze([
+    { label: 'Email', type: 'email' },
+    { label: 'First Name', type: 'text' },
+    { label: 'Last Name', type: 'text' },
+    { label: 'Phone Number', type: 'tel' },
+    { label: 'Password', type: 'password' },
+    { label: 'Confirm Password', type: 'password' }
+  ]);
 
   //RETURN
   return (
@@ -68,7 +85,8 @@ export default function Home() {
         <section>
           <div className={styles.register}>
             <h3> New? Please register</h3>
-            <form className={styles.form} onSubmit={onRegisterSubmit}>
+            <Form inputs={SIGNUP_INPUTS} formName={'signup'} />
+            {/* <form className={styles.form} onSubmit={onRegisterSubmit}>
               <label>
                 Email
                 <input
@@ -114,7 +132,7 @@ export default function Home() {
                 />
               </label>
               <button>Submit</button>
-            </form>
+            </form> */}
           </div>
           <div className={styles.login}>
             <h3>Welcome back please login</h3>
@@ -137,6 +155,7 @@ export default function Home() {
               </label>
               <button>Submit</button>
             </form>
+            <Form inputs={LOGIN_INPUTS} formName="Login"></Form>
           </div>
         </section>
       </main>
@@ -145,34 +164,34 @@ export default function Home() {
 
   //onChangeMethod
   //register form onChange need validation
-  function onRegEmailChange(e) {
-    const email = e.currentTarget.value;
-    setRegEmail(email);
-    // if(email.contains("<"))
-  }
-  function onFirstNameChange(e) {
-    const firstName = e.currentTarget.value;
-    setFirstName(firstName);
-  }
-  function onLastNameChange(e) {
-    const lastName = e.currentTarget.value;
-    setLastName(e.currentTarget.value);
-  }
-  function onPhoneNumberChange(e) {
-    const phoneNumber = e.currentTarget.value;
-    setPhoneNumber(phoneNumber);
-  }
-  function onRegPassChange(e) {
-    const password = e.currentTarget.value;
-    setRegPass(password);
-  }
-  function onRegPassVerifyChange(e) {
-    const passwordVerify = e.currentTarget.value;
-    if (passwordVerify !== regPass) setErrorMsg('Password do not match');
-    if (passwordVerify === regPass) setErrorMsg('');
-    setRegPassVerify(passwordVerify);
-    //need another state to check password
-  }
+  // function onRegEmailChange(e) {
+  //   const email = e.currentTarget.value;
+  //   setRegEmail(email);
+  //   // if(email.contains("<"))
+  // }
+  // function onFirstNameChange(e) {
+  //   const firstName = e.currentTarget.value;
+  //   setFirstName(firstName);
+  // }
+  // function onLastNameChange(e) {
+  //   const lastName = e.currentTarget.value;
+  //   setLastName(e.currentTarget.value);
+  // }
+  // function onPhoneNumberChange(e) {
+  //   const phoneNumber = e.currentTarget.value;
+  //   setPhoneNumber(phoneNumber);
+  // }
+  // function onRegPassChange(e) {
+  //   const password = e.currentTarget.value;
+  //   setRegPass(password);
+  // }
+  // function onRegPassVerifyChange(e) {
+  //   const passwordVerify = e.currentTarget.value;
+  //   if (passwordVerify !== regPass) setErrorMsg('Password do not match');
+  //   if (passwordVerify === regPass) setErrorMsg('');
+  //   setRegPassVerify(passwordVerify);
+  //   //need another state to check password
+  // }
 
   //login form onChange
   function onLoginEmailChange(e) {
