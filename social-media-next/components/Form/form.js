@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * This component takes in a prop called inputs and formName.
@@ -14,7 +14,7 @@ function Form({ inputs, formName }) {
   const numOfInputs = inputs.length;
   const createState = {};
   const onChange = {};
-  const [hasErrors, setHasErrors] = useState({});
+  const errors = {};
 
   /*Creates state dynamically. Not good practice according to documentation,
   but upon further reading since the size of array never changes it should not
@@ -30,16 +30,35 @@ function Form({ inputs, formName }) {
     onChange[i] = (e) => {
       const inputTag = e.currentTarget;
       console.log(inputTag.type);
-      if (!checkInputs(inputTag.value, inputTag.type));
+      if (!checkInputs(inputTag.value, inputTag.type, errors)) {
+        console.log('in inputs');
+        errors[i] = {
+          hasError: true,
+          message: `Incorrect format for type: ${inputTag.type} Please re-enter.`
+        };
+        // console.log(errors[i]);
+      }
       createState[i].setState(e.currentTarget.value);
     };
   }
 
-  //error handling
-  for (let i = 0; i < numOfInputs; i++) {}
+  // error state DOESN"T WORK CAUSE OF RE-RENDER might need a useEffect (DOESNT WORK after re render errors disappear)
+  //  did not use react hook useState because of infinite loop
+  //  caused by re-rendering every time this state changed, which it would change every time
+  //  in this loop, and then re-render and go back to this loop
+  useEffect(() => {
+    for (let i = 0; i < numOfInputs; i++) {
+      errors[i] = { hasError: false, message: '' };
+      // console.log(errors[i]);
+    }
+  }, []);
 
   function onSubmit(e) {
     e.preventDefault();
+    console.log(errors);
+    for (let i = 0; i < numOfInputs; i++) {
+      if (errors[i].hasError) return;
+    }
     console.log('submitted');
     console.log(createState);
   }
@@ -54,7 +73,9 @@ function Form({ inputs, formName }) {
             value={createState[index.state]}
             onChange={onChange[index]}
           />
-          <p>Error please use valid inputs</p>
+          {errors[index] && !errors[index].hasError ? null : (
+            <p>Error please use valid inputs</p>
+          )}
         </div>
       ))}
       <button type="submit">Submit</button>
@@ -62,9 +83,10 @@ function Form({ inputs, formName }) {
   );
 }
 
-function checkInputs(value) {
+function checkInputs(value, type, errors) {
   //checks inputs
-  return true;
+  console.log(errors);
+  return false;
 }
 
 export default Form;
