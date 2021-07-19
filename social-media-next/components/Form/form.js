@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
  *  -inputs is an array of an object with two properties:
  *    1) label: the name you want to put for the input.
  *    2) type: the input type you want to use.
+ *    - The inputs are created in order of the objects in the array
+ *    - Also if there is a password and confirm password inputs they should be next to each other.
  *  -formName is the name of the form you want. Helps create react keys dynamically
  * It will also create the a controlled form for input verification
  * @param props
@@ -21,7 +23,7 @@ function Form({ inputs, formName }) {
   have changed any side-effects */
   for (let i = 0; i < numOfInputs; i++) {
     /* eslint-disable */
-    const [state, setState] = useState('');
+    const [state, setState] = useState({});
     createState[i] = { state, setState };
   }
 
@@ -29,24 +31,22 @@ function Form({ inputs, formName }) {
   for (let i = 0; i < numOfInputs; i++) {
     onChange[i] = (e) => {
       const inputTag = e.currentTarget;
-      if (!checkInputs(inputTag.value, inputTag.type, errors)) {
-        setErrors({
-          ...errors,
-          [i]: {
-            hasError: true,
-            message: `Incorrect format for type: ${inputTag.type} Please re-enter.`
-          }
-        });
-      }
-      createState[i].setState(e.currentTarget.value);
+      createState[i].setState(inputTag);
+      checkInputs(
+        inputTag.value,
+        inputTag.type,
+        errors,
+        i,
+        createState,
+        setErrors
+      );
     };
   }
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log(errors);
-    for (let i = 0; i < numOfInputs; i++) {
-      if (errors[i].hasError) return;
+    for (const error of errors) {
+      if (error.hasError) return console.log('has error');
     }
     console.log('submitted');
     console.log(createState);
@@ -59,12 +59,10 @@ function Form({ inputs, formName }) {
           <label>{input.label}:</label>
           <input
             type={input.type}
-            value={createState[index.state]}
+            value={createState[index.state]?.value}
             onChange={onChange[index]}
           />
-          {!errors[index]?.hasError ? null : (
-            <p>Error please use valid inputs</p>
-          )}
+          {!errors[index]?.hasError ? null : <p>errors[index]</p>}
         </div>
       ))}
       <button type="submit">Submit</button>
@@ -72,9 +70,23 @@ function Form({ inputs, formName }) {
   );
 }
 
-function checkInputs(value, type, errors) {
+/**
+ * This is a helper function that does all the validation on forms
+ * @param value: the value of the current input
+ * @param type: the input type attribute
+ * @param errors: the error object, will add the errors if any persist
+ * @param index: the current index or iteration in the array
+ * @param stateObj: the obj that holds all the state, used for password verification
+ * @param setStateObj: the obj the changes the stateObj using React
+ * @returns a boolean value, also will change errors in a specified index if there are any problems
+ */
+function checkInputs(value, type, errors, index, stateObj, setStateObj) {
+  // console.log(stateObj[index - 1].state.type);
+  if (stateObj[index - 1].state.type === 'password') {
+    if (stateObj[index - 1].state.value !== value) return false;
+  }
   //checks inputs
-  console.log(errors);
+  // console.log(errors);
   return true;
 }
 
