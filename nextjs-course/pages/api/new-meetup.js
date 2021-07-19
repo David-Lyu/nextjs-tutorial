@@ -1,6 +1,6 @@
 //not react components. Just do function for server side code
 import { MeetupClient } from './mongodb';
-require('dotenv').config('local');
+// require('dotenv').config('local');
 // /api/new-meetup
 
 async function handler(req, res) {
