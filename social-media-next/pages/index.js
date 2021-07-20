@@ -10,49 +10,6 @@ import UserLoginError, {
 } from '../model/error_message/UserFormError';
 
 export default function Home() {
-  //STATE/////////////////////////////////////////////
-  // this is for which form to show on smaller screens
-  const [isLoginShown, setIsLoginShown] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [userLoginError, setUserLoginError] = useState(UserLoginError);
-
-  //forms onChange method will be under the return statement
-  //this is the state for the Registration Form
-  const [regEmail, setRegEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [regPass, setRegPass] = useState('');
-  const [regPassVerify, setRegPassVerify] = useState('');
-
-  //this is the state for the login Form
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPass, setLoginPass] = useState('');
-
-  //METHODS////////////////////////////////////////////
-  /**
-   * The functions to submit the forms to register user.
-   * It should also clear the form input and possible store u/n & pass in local storage?
-   * Maybe not if I do email auth
-   */
-  const onRegisterSubmit = (e) => {
-    console.log(e);
-    console.log(e);
-    e.preventDefault();
-    //need logic for when they resubmit
-  };
-
-  /**
-   * This method will check the backend and allow user to login.
-   * @param {*} e: The event triggered on the onSubmit.
-   */
-  const onLoginSubmit = (e) => {
-    console.log(e);
-    e.preventDefault();
-    if (errorMsg.length > 0) return;
-    console.log(e);
-  };
-
   //Form components
   const LOGIN_INPUTS = Object.freeze([
     { label: 'Email', type: 'email' },
@@ -86,172 +43,145 @@ export default function Home() {
           <div className={styles.register}>
             <h3> New? Please register</h3>
             <Form inputs={SIGNUP_INPUTS} formName={'signup'} />
-            {/* <form className={styles.form} onSubmit={onRegisterSubmit}>
-              <label>
-                Email
-                <input
-                  onChange={onRegEmailChange}
-                  value={regEmail}
-                  type="email"
-                />
-              </label>
-              <label>
-                First Name
-                <input onChange={onFirstNameChange} value={firstName} />
-              </label>
-              <label>
-                Last name
-                <input
-                  onChange={onLastNameChange}
-                  value={lastName}
-                  type="text"
-                />
-              </label>
-              <label>
-                Phone number
-                <input
-                  onChange={onPhoneNumberChange}
-                  value={phoneNumber}
-                  type="tel"
-                />
-              </label>
-              <label>
-                Password
-                <input
-                  onChange={onRegPassChange}
-                  value={regPass}
-                  type="password"
-                />
-              </label>
-              <label>
-                Confirm Password
-                <input
-                  onChange={onRegPassVerifyChange}
-                  value={regPassVerify}
-                  type="password"
-                />
-              </label>
-              <button>Submit</button>
-            </form> */}
+            {}
           </div>
           <div className={styles.login}>
             <h3>Welcome back please login</h3>
-            <form className={styles.form} onSubmit={onLoginSubmit}>
-              <label>
-                Email:
-                <input
-                  onChange={onLoginEmailChange}
-                  value={loginEmail}
-                  type="email"
-                />
-              </label>
-              <label>
-                Password
-                <input
-                  onChange={onLoginPasswordChange}
-                  value={loginPass}
-                  type="password"
-                />
-              </label>
-              <button>Submit</button>
-            </form>
             <Form inputs={LOGIN_INPUTS} formName="Login"></Form>
           </div>
         </section>
       </main>
     </div>
   );
-
-  //onChangeMethod
-  //register form onChange need validation
-  // function onRegEmailChange(e) {
-  //   const email = e.currentTarget.value;
-  //   setRegEmail(email);
-  //   // if(email.contains("<"))
-  // }
-  // function onFirstNameChange(e) {
-  //   const firstName = e.currentTarget.value;
-  //   setFirstName(firstName);
-  // }
-  // function onLastNameChange(e) {
-  //   const lastName = e.currentTarget.value;
-  //   setLastName(e.currentTarget.value);
-  // }
-  // function onPhoneNumberChange(e) {
-  //   const phoneNumber = e.currentTarget.value;
-  //   setPhoneNumber(phoneNumber);
-  // }
-  // function onRegPassChange(e) {
-  //   const password = e.currentTarget.value;
-  //   setRegPass(password);
-  // }
-  // function onRegPassVerifyChange(e) {
-  //   const passwordVerify = e.currentTarget.value;
-  //   if (passwordVerify !== regPass) setErrorMsg('Password do not match');
-  //   if (passwordVerify === regPass) setErrorMsg('');
-  //   setRegPassVerify(passwordVerify);
-  //   //need another state to check password
-  // }
-
-  //login form onChange
-  function onLoginEmailChange(e) {
-    setLoginEmail(e.currentTarget.value);
-  }
-  function onLoginPasswordChange(e) {
-    setLoginPass(e.currentTarget.value);
-  }
 }
 
-//  <main className={styles.main}>
-//         <h1 className={styles.title}>
-//           Welcome to <a href="https://nextjs.org">Next.js!</a>
-//         </h1>
+//STATE/////////////////////////////////////////////
+// this is for which form to show on smaller screens
+// const [isLoginShown, setIsLoginShown] = useState(false);
+// const [errorMsg, setErrorMsg] = useState('');
+// const [userLoginError, setUserLoginError] = useState(UserLoginError);
 
-//         <p className={styles.description}>
-//           Get started by editing{' '}
-//           <code className={styles.code}>pages/index.js</code>
-//         </p>
+// //forms onChange method will be under the return statement
+// //this is the state for the Registration Form
+// const [regEmail, setRegEmail] = useState('');
+// const [firstName, setFirstName] = useState('');
+// const [lastName, setLastName] = useState('');
+// const [phoneNumber, setPhoneNumber] = useState('');
+// const [regPass, setRegPass] = useState('');
+// const [regPassVerify, setRegPassVerify] = useState('');
 
-//         <div className={styles.grid}>
-//           <a href="https://nextjs.org/docs" className={styles.card}>
-//             <h2>Documentation &rarr;</h2>
-//             <p>Find in-depth information about Next.js features and API.</p>
-//           </a>
+// //this is the state for the login Form
+// const [loginEmail, setLoginEmail] = useState('');
+// const [loginPass, setLoginPass] = useState('');
 
-//           <a href="https://nextjs.org/learn" className={styles.card}>
-//             <h2>Learn &rarr;</h2>
-//             <p>Learn about Next.js in an interactive course with quizzes!</p>
-//           </a>
+//METHODS////////////////////////////////////////////
+/**
+ * The functions to submit the forms to register user.
+ * It should also clear the form input and possible store u/n & pass in local storage?
+ * Maybe not if I do email auth
+ */
+// const onRegisterSubmit = (e) => {
+//   console.log(e);
+//   console.log(e);
+//   e.preventDefault();
+//   //need logic for when they resubmit
+// };
 
-//           <a
-//             href="https://github.com/vercel/next.js/tree/master/examples"
-//             className={styles.card}
-//           >
-//             <h2>Examples &rarr;</h2>
-//             <p>Discover and deploy boilerplate example Next.js projects.</p>
-//           </a>
+/**
+ * This method will check the backend and allow user to login.
+ * @param {*} e: The event triggered on the onSubmit.
+ */
+// const onLoginSubmit = (e) => {
+//   console.log(e);
+//   e.preventDefault();
+//   if (errorMsg.length > 0) return;
+//   console.log(e);
+// };
 
-//           <a
-//             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-//             className={styles.card}
-//           >
-//             <h2>Deploy &rarr;</h2>
-//             <p>
-//               Instantly deploy your Next.js site to a public URL with Vercel.
-//             </p>
-//           </a>
-//         </div>
-//       </main>
+{
+  /* <form className={styles.form} onSubmit={onRegisterSubmit}>
+  <label>
+    Email
+    <input onChange={onRegEmailChange} value={regEmail} type="email" />
+  </label>
+  <label>
+    First Name
+    <input onChange={onFirstNameChange} value={firstName} />
+  </label>
+  <label>
+    Last name
+    <input onChange={onLastNameChange} value={lastName} type="text" />
+  </label>
+  <label>
+    Phone number
+    <input onChange={onPhoneNumberChange} value={phoneNumber} type="tel" />
+  </label>
+  <label>
+    Password
+    <input onChange={onRegPassChange} value={regPass} type="password" />
+  </label>
+  <label>
+    Confirm Password
+    <input
+      onChange={onRegPassVerifyChange}
+      value={regPassVerify}
+      type="password"
+    />
+  </label>
+  <button>Submit</button>
+</form>; */
+}
 
-//       <footer className={styles.footer}>
-//         <a
-//           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Powered by{' '}
-//           <span className={styles.logo}>
-//             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-//           </span>
-//         </a>
-//       </footer>
+{
+  /* <form className={styles.form} onSubmit={onLoginSubmit}>
+  <label>
+    Email:
+    <input onChange={onLoginEmailChange} value={loginEmail} type="email" />
+  </label>
+  <label>
+    Password
+    <input onChange={onLoginPasswordChange} value={loginPass} type="password" />
+  </label>
+  <button>Submit</button>
+</form>; */
+}
+
+//onChangeMethod
+
+//login form onChange
+// function onLoginEmailChange(e) {
+//   setLoginEmail(e.currentTarget.value);
+// }
+// function onLoginPasswordChange(e) {
+//   setLoginPass(e.currentTarget.value);
+// }
+
+//register form onChange need validation
+// function onRegEmailChange(e) {
+//   const email = e.currentTarget.value;
+//   setRegEmail(email);
+//   // if(email.contains("<"))
+// }
+// function onFirstNameChange(e) {
+//   const firstName = e.currentTarget.value;
+//   setFirstName(firstName);
+// }
+// function onLastNameChange(e) {
+//   const lastName = e.currentTarget.value;
+//   setLastName(e.currentTarget.value);
+// }
+// function onPhoneNumberChange(e) {
+//   const phoneNumber = e.currentTarget.value;
+//   setPhoneNumber(phoneNumber);
+// }
+// function onRegPassChange(e) {
+//   const password = e.currentTarget.value;
+//   setRegPass(password);
+// }
+// function onRegPassVerifyChange(e) {
+//   const passwordVerify = e.currentTarget.value;
+//   if (passwordVerify !== regPass) setErrorMsg('Password do not match');
+//   if (passwordVerify === regPass) setErrorMsg('');
+//   setRegPassVerify(passwordVerify);
+//   //need another state to check password
+// }

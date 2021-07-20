@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-
+import { useState } from 'react';
+///////////////////////ONSUBMIT ON THE WORKS
 /**
  * This component takes in a prop called inputs and formName.
  *  -inputs is an array of an object with two properties:
@@ -32,20 +32,22 @@ function Form({ inputs, formName }) {
     onChange[i] = (e) => {
       const inputTag = e.currentTarget;
       createState[i].setState(inputTag);
-      checkInputs(
+
+      const hasNoErrors = checkInputs(
         inputTag.value,
         inputTag.type,
         errors,
+        setErrors,
         i,
-        createState,
-        setErrors
+        createState
       );
     };
   }
 
   function onSubmit(e) {
     e.preventDefault();
-    for (const error of errors) {
+    for (const key in errors) {
+      const error = errors[key];
       if (error.hasError) return console.log('has error');
     }
     console.log('submitted');
@@ -62,7 +64,7 @@ function Form({ inputs, formName }) {
             value={createState[index.state]?.value}
             onChange={onChange[index]}
           />
-          {!errors[index]?.hasError ? null : <p>errors[index]</p>}
+          {!errors[index]?.hasError ? null : <p>{errors[index].message}</p>}
         </div>
       ))}
       <button type="submit">Submit</button>
@@ -71,19 +73,39 @@ function Form({ inputs, formName }) {
 }
 
 /**
- * This is a helper function that does all the validation on forms
+ * This is a helper function that does all the validation on forms,
+ * also will change errors in a specified index if there are any problems
  * @param value: the value of the current input
  * @param type: the input type attribute
  * @param errors: the error object, will add the errors if any persist
  * @param index: the current index or iteration in the array
  * @param stateObj: the obj that holds all the state, used for password verification
  * @param setStateObj: the obj the changes the stateObj using React
- * @returns a boolean value, also will change errors in a specified index if there are any problems
+ * @returns a boolean value
  */
-function checkInputs(value, type, errors, index, stateObj, setStateObj) {
+function checkInputs(value, type, errors, setErrors, index, stateObj) {
   // console.log(stateObj[index - 1].state.type);
-  if (stateObj[index - 1].state.type === 'password') {
-    if (stateObj[index - 1].state.value !== value) return false;
+  if (stateObj[index - 1]?.state.type === 'password') {
+    if (stateObj[index - 1].state.value !== value) {
+      setErrors({
+        ...errors,
+        [index]: {
+          hasError: true,
+          message: 'Password does not match'
+        }
+      });
+    } else {
+      setErrors({
+        ...errors,
+        [index]: {
+          hasError: false,
+          value,
+          message: ''
+        }
+      });
+      console.log('inside value');
+      return false;
+    }
   }
   //checks inputs
   // console.log(errors);
