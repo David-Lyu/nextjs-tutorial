@@ -32,15 +32,7 @@ function Form({ inputs, formName }) {
     onChange[i] = (e) => {
       const inputTag = e.currentTarget;
       createState[i].setState(inputTag);
-
-      const hasNoErrors = checkInputs(
-        inputTag.value,
-        inputTag.type,
-        errors,
-        setErrors,
-        i,
-        createState
-      );
+      checkInputs(inputTag, i);
     };
   }
 
@@ -48,9 +40,27 @@ function Form({ inputs, formName }) {
     e.preventDefault();
     for (const key in errors) {
       const error = errors[key];
-      if (error.hasError) return console.log('has error');
+      //might move this into a helper function below do b/c it is done multiple times
+      if (error.hasError) {
+        setErrors({
+          ...errors,
+          [props.formName]: {
+            hasError: true,
+            message: 'Not submitted please clear errors'
+          }
+        });
+        return console.log('has error');
+      }
     }
-    console.log('submitted');
+    if (!props.formName.hasError) {
+      setErrors({
+        ...errors,
+        [props.formName]: {
+          hasError: false,
+          message: ''
+        }
+      });
+    }
     console.log(createState);
   }
 
@@ -70,31 +80,35 @@ function Form({ inputs, formName }) {
       <button type="submit">Submit</button>
     </form>
   );
+
+  //helper function to check inputs
+  function checkInputs(inputTag, index) {
+    // console.log(stateObj[index - 1].state.type);
+    //checks inputs
+    switch (inputTag.type) {
+      default:
+      case 'password':
+        checkPasswords(
+          inputTag.value,
+          inputTag.type,
+          errors,
+          setErrors,
+          index,
+          createState
+        );
+        break;
+      case 'email':
+        break;
+      case 'tel':
+        break;
+    }
+  }
 }
 
-/**
- * This is a helper function that does all the validation on forms,
- * also will change errors in a specified index if there are any problems
- * @param value: the value of the current input
- * @param type: the input type attribute
- * @param errors: the error object, will add the errors if any persist
- * @param index: the current index or iteration in the array
- * @param stateObj: the obj that holds all the state, used for password verification
- * @param setStateObj: the obj the changes the stateObj using React
- * @returns a boolean value
- */
-function checkInputs(value, type, errors, setErrors, index, stateObj) {
-  // console.log(stateObj[index - 1].state.type);
+// small bug if user puts confirm password first then password will cause error still
+function checkPasswords(value, type, errors, setErrors, index, stateObj) {
   if (stateObj[index - 1]?.state.type === 'password') {
-    if (stateObj[index - 1].state.value !== value) {
-      setErrors({
-        ...errors,
-        [index]: {
-          hasError: true,
-          message: 'Password does not match'
-        }
-      });
-    } else {
+    if (stateObj[index - 1].state.value === value || value.length === 0) {
       setErrors({
         ...errors,
         [index]: {
@@ -103,13 +117,20 @@ function checkInputs(value, type, errors, setErrors, index, stateObj) {
           message: ''
         }
       });
-      console.log('inside value');
+      return true;
+    }
+
+    if (stateObj[index - 1].state.value !== value) {
+      setErrors({
+        ...errors,
+        [index]: {
+          hasError: true,
+          message: 'Password does not match'
+        }
+      });
       return false;
     }
   }
-  //checks inputs
-  // console.log(errors);
-  return true;
 }
 
 export default Form;
