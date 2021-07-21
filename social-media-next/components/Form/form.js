@@ -83,7 +83,6 @@ function Form({ inputs, formName }) {
 
   //helper function to check inputs
   function checkInputs(inputTag, index) {
-    // console.log(stateObj[index - 1].state.type);
     //checks inputs
     switch (inputTag.type) {
       default:
@@ -131,6 +130,22 @@ function checkPasswords(value, type, errors, setErrors, index, stateObj) {
       return false;
     }
   }
+}
+
+function checkUserInputs() {
+  // regex [a-zA-Z][a-zA-Z0-9-_]{4,24}
+}
+
+function checkTelephone() {
+  // \(?(\d{3})\)?[-\.\s]?(\d{3})[-\.\s]?(\d{4})
+}
+
+function checkURL() {
+  // [(http(s)?):\/\/(www\.)?\w-/=#%&\.\?]{2,}\.[a-z]{2,}([\w-/=#%&\.\?]*)
+}
+
+function checkEmailAddress() {
+  // (\w\.?)+@[\w\.-]+\.\w{2,4}
 }
 
 export default Form;
