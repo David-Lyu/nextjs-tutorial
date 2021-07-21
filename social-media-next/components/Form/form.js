@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import classes from './form.module.css';
 ///////////////////////ONSUBMIT ON THE WORKS
 /**
  * This component takes in a prop called inputs and formName.
@@ -40,40 +41,41 @@ function Form({ inputs, formName }) {
     e.preventDefault();
     for (const key in errors) {
       const error = errors[key];
-      //might move this into a helper function below do b/c it is done multiple times
       if (error.hasError) {
-        setErrors({
-          ...errors,
-          [props.formName]: {
-            hasError: true,
-            message: 'Not submitted please clear errors'
-          }
-        });
-        return console.log('has error');
+        const message = 'Not submitted please clear errors';
+        helpSetErrors(errors, setErrors, props.formName, message);
+        return;
       }
     }
-    if (!props.formName.hasError) {
-      setErrors({
-        ...errors,
-        [props.formName]: {
-          hasError: false,
-          message: ''
-        }
-      });
+
+    for (let i = 0; i < numOfInputs; i++) {
+      if (!createState[i] || !createState[index].value) {
+        const message = 'Please fill out all the form inputs';
+        helpSetErrors(errors, setErrors, props.formName, message);
+        return;
+      }
     }
-    console.log(createState);
+
+    if (props.formName.hasError) {
+      helpSetErrors(errors, setErrors, formName, '');
+    }
+
+    console.log('submitted');
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className={classes.form}>
       {inputs.map((input, index) => (
         <div key={formName + input.label}>
-          <label>{input.label}:</label>
-          <input
-            type={input.type}
-            value={createState[index.state]?.value}
-            onChange={onChange[index]}
-          />
+          <label>
+            {input.label}:
+            <input
+              type={input.type}
+              value={createState[index.state]?.value}
+              onChange={onChange[index]}
+              required={true}
+            />
+          </label>
           {!errors[index]?.hasError ? null : <p>{errors[index].message}</p>}
         </div>
       ))}
@@ -116,91 +118,53 @@ function Form({ inputs, formName }) {
 }
 
 function checkUserInputs(value, index, errors, setErrors) {
-  const noNoChar = new RegExp('[<>{} ]', 'g');
+  const noNoChar = new RegExp('[<>{}/]', 'g');
   const userInputs = new RegExp('[a-zA-Z0-9-_]', 'g');
   // regex [a-zA-Z][a-zA-Z0-9-_]{4,24}
-  if (noNoChar.test(value)) {
-    setErrors({
-      ...errors,
-      [index]: { hasError: true, message: 'You have invalid inputs' }
-    });
+  if (noNoChar.test(value) && value.length) {
+    const message = 'You have invalid inputs. Ex: "<,>,{,},/,\\"';
+    helpSetErrors(errors, setErrors, index, message);
     return;
   }
 
-  if (!noNoChar.test(value)) {
-    setErrors({
-      ...errors,
-      [index]: { hasError: false, message: '' }
-    });
-  }
-
-  if (!userInputs.test(value)) {
-    setErrors({
-      ...errors,
-      [index]: {
-        hasError: true,
-        message:
-          'Please put letters and numbers with a length of 4 - 25 characters'
-      }
-    });
-
-    if (userInputs.test(value) || value.length === 0) {
-      setErrors({
-        ...errors,
-        [index]: { hasError: false, message: '' }
-      });
-    }
+  if (!userInputs.test(value) && value.length) {
+    const message =
+      'Please put letters and numbers with a length of up to 25 characters';
+    helpSetErrors(errors, setErrors, index, message);
     return;
   }
+
+  if (value.length === 0 || errors[index]?.hasError) {
+    helpSetErrors(errors, setErrors, index, '');
+  }
+  return;
 }
 
-// small bug if user puts confirm password first then password will cause error still
 function checkPasswords(value, type, errors, setErrors, index, stateObj) {
   if (stateObj[index - 1]?.state.type === 'password') {
     if (stateObj[index - 1].state.value === value || value.length === 0) {
-      setErrors({
-        ...errors,
-        [index]: {
-          hasError: false,
-          value,
-          message: ''
-        }
-      });
+      const message = '';
+      helpSetErrors(errors, setErrors, index, message);
       return true;
     }
 
     if (stateObj[index - 1].state.value !== value) {
-      setErrors({
-        ...errors,
-        [index]: {
-          hasError: true,
-          message: 'Password does not match'
-        }
-      });
+      const message = 'Password does not match';
+      helpSetErrors(errors, setErrors, index, message);
       return false;
     }
   }
+
   if (stateObj[index + 1]?.state.type === 'password') {
     if (stateObj[index + 1].state.value === value || value.length === 0) {
-      setErrors({
-        ...errors,
-        [index]: {
-          hasError: false,
-          value,
-          message: ''
-        }
-      });
+      const message = '';
+      helpSetErrors(errors, setErrors, index + 1, message);
       return true;
     }
 
     if (stateObj[index + 1].state.value !== value) {
-      setErrors({
-        ...errors,
-        [index]: {
-          hasError: true,
-          message: 'Password does not match'
-        }
-      });
+      const message = 'Password does not match';
+      helpSetErrors(errors, setErrors, index + 1, message);
       return false;
     }
   }
@@ -218,4 +182,17 @@ function checkEmailAddress() {
   // (\w\.?)+@[\w\.-]+\.\w{2,4}
 }
 
+/**
+ *
+ * @param {*errors The error state object that React handles
+ * @param {*setErrors The setState object that React handles
+ * @param {*key the key of the errors state to mutate, usually an index
+ * @param {*message the error message you want to pass
+ */
+function helpSetErrors(errors, setErrors, key, message) {
+  setErrors({
+    ...errors,
+    [key]: { hasError: !!message, message: message }
+  });
+}
 export default Form;

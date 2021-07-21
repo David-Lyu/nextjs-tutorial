@@ -1,0 +1,22 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form > div {
+  margin-top: 0.5em;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.form > button {
+  /* flex-basis: 40%; */
+  margin-top: 1em;
+  width: 30%;
+  align-self: center;
+}
