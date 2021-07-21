@@ -84,8 +84,9 @@ function Form({ inputs, formName }) {
   //helper function to check inputs
   function checkInputs(inputTag, index) {
     //checks inputs
+    checkUserInputs(inputTag.value, index, errors, setErrors);
+
     switch (inputTag.type) {
-      default:
       case 'password':
         checkPasswords(
           inputTag.value,
@@ -100,7 +101,56 @@ function Form({ inputs, formName }) {
         break;
       case 'tel':
         break;
+      case 'text':
+        break;
+      default:
+        setErrors({
+          ...errors,
+          [formName]: {
+            hasErrors: true,
+            message: 'INPUT TYPE NOT ACCEPTED...YET'
+          }
+        });
     }
+  }
+}
+
+function checkUserInputs(value, index, errors, setErrors) {
+  const noNoChar = new RegExp('[<>{} ]', 'g');
+  const userInputs = new RegExp('[a-zA-Z0-9-_]', 'g');
+  // regex [a-zA-Z][a-zA-Z0-9-_]{4,24}
+  if (noNoChar.test(value)) {
+    setErrors({
+      ...errors,
+      [index]: { hasError: true, message: 'You have invalid inputs' }
+    });
+    return;
+  }
+
+  if (!noNoChar.test(value)) {
+    setErrors({
+      ...errors,
+      [index]: { hasError: false, message: '' }
+    });
+  }
+
+  if (!userInputs.test(value)) {
+    setErrors({
+      ...errors,
+      [index]: {
+        hasError: true,
+        message:
+          'Please put letters and numbers with a length of 4 - 25 characters'
+      }
+    });
+
+    if (userInputs.test(value) || value.length === 0) {
+      setErrors({
+        ...errors,
+        [index]: { hasError: false, message: '' }
+      });
+    }
+    return;
   }
 }
 
@@ -130,10 +180,30 @@ function checkPasswords(value, type, errors, setErrors, index, stateObj) {
       return false;
     }
   }
-}
+  if (stateObj[index + 1]?.state.type === 'password') {
+    if (stateObj[index + 1].state.value === value || value.length === 0) {
+      setErrors({
+        ...errors,
+        [index]: {
+          hasError: false,
+          value,
+          message: ''
+        }
+      });
+      return true;
+    }
 
-function checkUserInputs() {
-  // regex [a-zA-Z][a-zA-Z0-9-_]{4,24}
+    if (stateObj[index + 1].state.value !== value) {
+      setErrors({
+        ...errors,
+        [index]: {
+          hasError: true,
+          message: 'Password does not match'
+        }
+      });
+      return false;
+    }
+  }
 }
 
 function checkTelephone() {
