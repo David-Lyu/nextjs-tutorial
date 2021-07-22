@@ -10,7 +10,8 @@ import classes from './form.module.css';
  *    - Also if there is a password and confirm password inputs they should be next to each other.
  *  -formName is the name of the form you want. Helps create react keys dynamically
  * It will also create the a controlled form for input verification
- * @param props
+ * The body data that is being sent will be in JSON format, with the keys camelCased.
+ *  - The label can have spaces in between and this will automatically take them
  * @returns Returns a form with its components
  */
 function Form({ inputs, formName }) {
