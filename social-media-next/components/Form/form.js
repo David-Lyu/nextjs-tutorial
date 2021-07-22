@@ -36,31 +36,49 @@ function Form({ inputs, formName }) {
       checkInputs(inputTag, i);
     };
   }
-
+  //logical errors found stops at the first key in errors
   function onSubmit(e) {
     e.preventDefault();
+    let body = {};
+    console.log('start onSubmit');
+    for (let i = 0; i < numOfInputs; i++) {
+      if (!createState[i].state || !createState[i].state.value) {
+        const message = 'Please fill out all the form inputs';
+        helpSetErrors(errors, setErrors, formName, message);
+        return;
+      }
+
+      //this creates the name for the data in the object making the label text into camelCase
+      //by splitting into arrays and capitalizing the first letter of the string its
+      //  split into except the first index(0) and then joins the arrays back together
+      let nameChange = inputs[i].label.toLowerCase().split(' ');
+      if (nameChange.length > 1) {
+        for (let i = 0; i < nameChange.length; i++) {
+          if (i === 0) continue;
+          const string = nameChange[i];
+          nameChange[i] = string[0].toUpperCase() + string.slice(1);
+        }
+      }
+
+      body[nameChange.join('')] = createState[i].state.value;
+    }
+
+    if (errors.formName?.hasError) {
+      helpSetErrors(errors, setErrors, formName, '');
+    }
+
+    console.log('after check erros');
     for (const key in errors) {
       const error = errors[key];
       if (error.hasError) {
         const message = 'Not submitted please clear errors';
-        helpSetErrors(errors, setErrors, props.formName, message);
+        helpSetErrors(errors, setErrors, formName, message);
         return;
       }
     }
 
-    for (let i = 0; i < numOfInputs; i++) {
-      if (!createState[i] || !createState[index].value) {
-        const message = 'Please fill out all the form inputs';
-        helpSetErrors(errors, setErrors, props.formName, message);
-        return;
-      }
-    }
-
-    if (props.formName.hasError) {
-      helpSetErrors(errors, setErrors, formName, '');
-    }
-
-    console.log('submitted');
+    console.log(body);
+    // fetch();
   }
 
   return (
