@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-  console.log(req);
+  // console.log(req);
   const data = req.body;
   if (!req.method === 'POST') {
     return res.status(400).json({ error: 'invalid method' });
@@ -7,9 +7,13 @@ export default function handler(req, res) {
   if (!data || !Object.keys(data).length) {
     return res.status(400).json({ error: 'invalid body' });
   }
-  for (key in data) {
+  for (const key in data) {
     if (!data[key]) return res.status(400).json({ error: 'invalid body' });
   }
 
+  //need validation to prevent injection
+
   const email = data.email;
+  //enter user in db and have email verify
+  res.status(201).json({ message: 'user inputted' });
 }

@@ -15,6 +15,10 @@ export default function Home() {
     { label: 'Email', type: 'email' },
     { label: 'Password', type: 'password' }
   ]);
+  const LOGIN_CONFIG = Object.freeze({
+    url: '/api/create-new-user',
+    method: 'POST'
+  });
   const SIGNUP_INPUTS = Object.freeze([
     { label: 'Email', type: 'email' },
     { label: 'First Name', type: 'text' },
@@ -42,8 +46,11 @@ export default function Home() {
         <section>
           <div className={styles.register}>
             <h3> New? Please register</h3>
-            <Form inputs={SIGNUP_INPUTS} formName={'signup'} />
-            {}
+            <Form
+              inputs={SIGNUP_INPUTS}
+              formName={'signup'}
+              config={LOGIN_CONFIG}
+            />
           </div>
           <div className={styles.login}>
             <h3>Welcome back please login</h3>

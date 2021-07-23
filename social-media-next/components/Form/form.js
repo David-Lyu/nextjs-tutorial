@@ -14,7 +14,7 @@ import classes from './form.module.css';
  *  - The label can have spaces in between and this will automatically take them
  * @returns Returns a form with its components
  */
-function Form({ inputs, formName }) {
+function Form({ inputs, formName, config }) {
   const numOfInputs = inputs.length;
   const createState = {};
   const onChange = {};
@@ -38,7 +38,7 @@ function Form({ inputs, formName }) {
     };
   }
   //logical errors found stops at the first key in errors
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
     let body = {};
     console.log('start onSubmit');
@@ -68,7 +68,7 @@ function Form({ inputs, formName }) {
       helpSetErrors(errors, setErrors, formName, '');
     }
 
-    console.log('after check erros');
+    console.log('after check errors');
     for (const key in errors) {
       const error = errors[key];
       if (error.hasError) {
@@ -77,9 +77,17 @@ function Form({ inputs, formName }) {
         return;
       }
     }
-
+    const fetchConfig = {
+      method: config.method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    };
     console.log(body);
     // fetch();
+    const response = await (await fetch(config.url, fetchConfig)).json();
+    console.log(response);
   }
 
   return (
