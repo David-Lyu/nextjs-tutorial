@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import Headers from '../components/header/header';
-import Form from '../components/Form/form';
+import Form from '../components/modules/Form/form';
 
 import { useState } from 'react';
 import UserLoginError, {
@@ -30,7 +29,7 @@ export default function Home() {
 
   //RETURN
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Social Media App</title>
         <meta
@@ -39,8 +38,6 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Headers></Headers>
       <main className={styles.main + ' row'}>
         <h1>Welcome to Social Media</h1>
         <section>
