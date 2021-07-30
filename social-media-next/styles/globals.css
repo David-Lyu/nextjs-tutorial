@@ -38,3 +38,11 @@ a {
 .container > * {
   /* margin: 0 0 0.5em 0; */
 }
+
+/*need to change parent div of forms with media query about 1000px to be 20%  */
+
+@media screen and (min-width: 1000px) {
+  .signup-section > div {
+    flex-basis: 20%;
+  }
+}

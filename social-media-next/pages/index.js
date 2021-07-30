@@ -40,7 +40,7 @@ export default function Home() {
       </Head>
       <main className={styles.main + ' row'}>
         <h1>Welcome to Social Media</h1>
-        <section>
+        <section className={'signup-section'}>
           <div className={styles.register}>
             <h3> New? Please register</h3>
             <Form
