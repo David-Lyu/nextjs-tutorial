@@ -1,4 +1,6 @@
-export default function handler(req, res) {
+import Client from '../../lib/mongodb';
+
+async function handler(req, res) {
   // console.log(req);
   const data = req.body;
   if (!req.method === 'POST') {
@@ -13,7 +15,16 @@ export default function handler(req, res) {
 
   //need validation to prevent injection
 
-  const email = data.email;
+  // const email = data.email;
   //enter user in db and have email verify
+  const connectedClient = await Client.connect();
+  const db = await Client.db('social-next');
+  const userCollection = await db.collection('users');
+  const results = await userCollection.insertOne(data);
+
+  Client.close();
+
   res.status(201).json({ message: 'user inputted' });
 }
+
+export default handler;
