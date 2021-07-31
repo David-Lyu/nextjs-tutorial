@@ -22,11 +22,13 @@ async function handler(req, res) {
   const userCollection = await db.collection('users');
   const results = await userCollection.findOne({ email: email });
 
-  console.log(results.password);
-
   Client.close();
+  console.log(results, data);
+  if (results.password !== data.password) {
+    return res.status(400).json({ message: 'username/password incorrect' });
+  }
 
-  res.status(201).json({ message: 'user inputted' });
+  res.status(201).json({ message: 'login successful' });
 }
 
 export default handler;

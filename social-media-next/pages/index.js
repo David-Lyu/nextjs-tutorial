@@ -3,11 +3,6 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Form from '../components/modules/Form/form';
 
-import { useState } from 'react';
-import UserLoginError, {
-  RegisterUserErrors
-} from '../model/error_message/UserFormError';
-
 export default function Home() {
   //Form components
   const LOGIN_CONFIG = Object.freeze({
@@ -18,6 +13,10 @@ export default function Home() {
     { label: 'Email', type: 'email' },
     { label: 'Password', type: 'password' }
   ]);
+  function loginFunc(data) {
+    console.log(data);
+  }
+
   const SIGNUP_CONFIG = Object.freeze({
     url: '/api/create-new-user',
     method: 'POST'
@@ -30,6 +29,7 @@ export default function Home() {
     { label: 'Password', type: 'password' },
     { label: 'Confirm Password', type: 'password' }
   ]);
+  function signupFunc(data) {}
 
   //RETURN
   return (
@@ -67,138 +67,3 @@ export default function Home() {
     </div>
   );
 }
-
-function signupFunc(data) {}
-
-function loginFunc(data) {}
-
-//STATE/////////////////////////////////////////////
-// this is for which form to show on smaller screens
-// const [isLoginShown, setIsLoginShown] = useState(false);
-// const [errorMsg, setErrorMsg] = useState('');
-// const [userLoginError, setUserLoginError] = useState(UserLoginError);
-
-// //forms onChange method will be under the return statement
-// //this is the state for the Registration Form
-// const [regEmail, setRegEmail] = useState('');
-// const [firstName, setFirstName] = useState('');
-// const [lastName, setLastName] = useState('');
-// const [phoneNumber, setPhoneNumber] = useState('');
-// const [regPass, setRegPass] = useState('');
-// const [regPassVerify, setRegPassVerify] = useState('');
-
-// //this is the state for the login Form
-// const [loginEmail, setLoginEmail] = useState('');
-// const [loginPass, setLoginPass] = useState('');
-
-//METHODS////////////////////////////////////////////
-/**
- * The functions to submit the forms to register user.
- * It should also clear the form input and possible store u/n & pass in local storage?
- * Maybe not if I do email auth
- */
-// const onRegisterSubmit = (e) => {
-//   console.log(e);
-//   console.log(e);
-//   e.preventDefault();
-//   //need logic for when they resubmit
-// };
-
-/**
- * This method will check the backend and allow user to login.
- * @param {*} e: The event triggered on the onSubmit.
- */
-// const onLoginSubmit = (e) => {
-//   console.log(e);
-//   e.preventDefault();
-//   if (errorMsg.length > 0) return;
-//   console.log(e);
-// };
-
-{
-  /* <form className={styles.form} onSubmit={onRegisterSubmit}>
-  <label>
-    Email
-    <input onChange={onRegEmailChange} value={regEmail} type="email" />
-  </label>
-  <label>
-    First Name
-    <input onChange={onFirstNameChange} value={firstName} />
-  </label>
-  <label>
-    Last name
-    <input onChange={onLastNameChange} value={lastName} type="text" />
-  </label>
-  <label>
-    Phone number
-    <input onChange={onPhoneNumberChange} value={phoneNumber} type="tel" />
-  </label>
-  <label>
-    Password
-    <input onChange={onRegPassChange} value={regPass} type="password" />
-  </label>
-  <label>
-    Confirm Password
-    <input
-      onChange={onRegPassVerifyChange}
-      value={regPassVerify}
-      type="password"
-    />
-  </label>
-  <button>Submit</button>
-</form>; */
-}
-
-{
-  /* <form className={styles.form} onSubmit={onLoginSubmit}>
-  <label>
-    Email:
-    <input onChange={onLoginEmailChange} value={loginEmail} type="email" />
-  </label>
-  <label>
-    Password
-    <input onChange={onLoginPasswordChange} value={loginPass} type="password" />
-  </label>
-  <button>Submit</button>
-</form>; */
-}
-
-//onChangeMethod
-
-//login form onChange
-// function onLoginEmailChange(e) {
-//   setLoginEmail(e.currentTarget.value);
-// }
-// function onLoginPasswordChange(e) {
-//   setLoginPass(e.currentTarget.value);
-// }
-
-//register form onChange need validation
-// function onRegEmailChange(e) {
-//   const email = e.currentTarget.value;
-//   setRegEmail(email);
-//   // if(email.contains("<"))
-// }
-// function onFirstNameChange(e) {
-//   const firstName = e.currentTarget.value;
-//   setFirstName(firstName);
-// }
-// function onLastNameChange(e) {
-//   const lastName = e.currentTarget.value;
-//   setLastName(e.currentTarget.value);
-// }
-// function onPhoneNumberChange(e) {
-//   const phoneNumber = e.currentTarget.value;
-//   setPhoneNumber(phoneNumber);
-// }
-// function onRegPassChange(e) {
-//   const password = e.currentTarget.value;
-//   setRegPass(password);
-// }
-// function onRegPassVerifyChange(e) {
-//   const passwordVerify = e.currentTarget.value;
-//   if (passwordVerify !== regPass) setErrorMsg('Password do not match');
-//   if (passwordVerify === regPass) setErrorMsg('');
-//   setRegPassVerify(passwordVerify);
-//   //need another state to check password
-// }

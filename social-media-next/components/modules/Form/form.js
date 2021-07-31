@@ -89,11 +89,11 @@ function Form({ inputs, formName, config, submitFunc }) {
     console.log(body);
     // fetch();
     const response = await (await fetch(config.url, fetchConfig)).json();
-    if (!response.data) {
+    if (!response) {
       const message = 'Could not get data';
       helpSetErrors(errors, setErrors, formName, message);
     }
-    submitFunc(response.data);
+    submitFunc(response);
     console.log(response);
   }
 
