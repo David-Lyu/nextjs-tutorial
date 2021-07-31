@@ -10,11 +10,15 @@ import UserLoginError, {
 
 export default function Home() {
   //Form components
+  const LOGIN_CONFIG = Object.freeze({
+    url: '/api/login',
+    method: 'POST'
+  });
   const LOGIN_INPUTS = Object.freeze([
     { label: 'Email', type: 'email' },
     { label: 'Password', type: 'password' }
   ]);
-  const LOGIN_CONFIG = Object.freeze({
+  const SIGNUP_CONFIG = Object.freeze({
     url: '/api/create-new-user',
     method: 'POST'
   });
@@ -40,24 +44,33 @@ export default function Home() {
       </Head>
       <main className={styles.main + ' row'}>
         <h1>Welcome to Social Media</h1>
-        <section className={'signup-section'}>
+        <section className={styles['signup-section']}>
           <div className={styles.register}>
             <h3> New? Please register</h3>
             <Form
               inputs={SIGNUP_INPUTS}
               formName={'signup'}
-              config={LOGIN_CONFIG}
+              config={SIGNUP_CONFIG}
+              submitFunc={signupFunc}
             />
           </div>
           <div className={styles.login}>
             <h3>Welcome back please login</h3>
-            <Form inputs={LOGIN_INPUTS} formName="Login"></Form>
+            <Form
+              inputs={LOGIN_INPUTS}
+              formName="Login"
+              config={LOGIN_CONFIG}
+              submitFunc={loginFunc}></Form>
           </div>
         </section>
       </main>
     </div>
   );
 }
+
+function signupFunc(data) {}
+
+function loginFunc(data) {}
 
 //STATE/////////////////////////////////////////////
 // this is for which form to show on smaller screens

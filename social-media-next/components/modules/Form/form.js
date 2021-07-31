@@ -2,19 +2,21 @@ import { useState } from 'react';
 import classes from './form.module.css';
 ///////////////////////ONSUBMIT ON THE WORKS
 /**
- * This component takes in a prop called inputs and formName.
- *  -inputs is an array of an object with two properties:
+ * This component takes in props called inputs, formName, config, submitFunc.
+ * @param inputs is an array of an object with two properties:
  *    1) label: the name you want to put for the input.
  *    2) type: the input type you want to use.
  *    - The inputs are created in order of the objects in the array
  *    - Also if there is a password and confirm password inputs they should be next to each other.
- *  -formName is the name of the form you want. Helps create react keys dynamically
+ *  @param formName is the name of the form you want. Helps create react keys dynamically
+ *  @param config is the configuration for the http request, so url and method
+ *  @param submitFuc is a function predefined to do any logic with the data.
  * It will also create the a controlled form for input verification
  * The body data that is being sent will be in JSON format, with the keys camelCased.
  *  - The label can have spaces in between and this will automatically take them
  * @returns Returns a form with its components
  */
-function Form({ inputs, formName, config }) {
+function Form({ inputs, formName, config, submitFunc }) {
   const numOfInputs = inputs.length;
   const createState = {};
   const onChange = {};
@@ -37,7 +39,7 @@ function Form({ inputs, formName, config }) {
       checkInputs(inputTag, i);
     };
   }
-  //logical errors found stops at the first key in errors
+
   async function onSubmit(e) {
     e.preventDefault();
     let body = {};
@@ -87,6 +89,11 @@ function Form({ inputs, formName, config }) {
     console.log(body);
     // fetch();
     const response = await (await fetch(config.url, fetchConfig)).json();
+    if (!response.data) {
+      const message = 'Could not get data';
+      helpSetErrors(errors, setErrors, formName, message);
+    }
+    submitFunc(response.data);
     console.log(response);
   }
 

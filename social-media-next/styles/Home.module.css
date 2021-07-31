@@ -66,17 +66,13 @@
   justify-content: space-evenly;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.signup-section > div > h3 {
+  text-align: left;
 }
-
 /*need to change parent div of forms with media query about 1000px to be 20%  */
 
 @media screen and (min-width: 1000px) {
   .signup-section > div {
     flex-basis: 20%;
-    background-color: black;
   }
 }
