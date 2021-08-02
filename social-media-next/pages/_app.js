@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
       <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
           <Layout>
-            <Component {...pageProps} />{' '}
+            <Component {...pageProps} />
           </Layout>
         </DispatchContext.Provider>
       </StateContext.Provider>
