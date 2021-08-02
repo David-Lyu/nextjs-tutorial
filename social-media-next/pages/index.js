@@ -1,9 +1,20 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { signIn, signOut, useSession } from 'next-auth/client';
+
 import styles from '../styles/Home.module.css';
 import Form from '../components/modules/Form/form';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const router = useRouter();
+  const [session, loading] = useSession();
+
+  useEffect(() => {
+    if (session) router.push('/secret');
+  }, [session]);
+
   //Form components
   const LOGIN_CONFIG = Object.freeze({
     url: '/api/login',
@@ -61,6 +72,10 @@ export default function Home() {
               formName="Login"
               config={LOGIN_CONFIG}
               submitFunc={loginFunc}></Form>
+            <div>
+              Or signin with GitHub{' '}
+              <button onClick={signIn}>Github Sign in</button>
+            </div>
           </div>
         </section>
       </main>
