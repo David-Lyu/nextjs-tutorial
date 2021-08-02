@@ -22,7 +22,9 @@ const options = {
   database: 'mongodb://localhost:27017/next-social'
 };
 
-export default (req, res) => NextAuth(req, res, options);
+export default function handler(req, res) {
+  NextAuth(req, res, options);
+}
 
 // export default NextAuth({
 //   providers: [
