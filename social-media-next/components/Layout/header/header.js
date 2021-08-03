@@ -6,9 +6,14 @@ import styles from './header.module.css';
 export default function Header(props) {
   const [session, loading] = useSession();
 
+  const homePage = session ? `/profile/${session.user.id}` : '/';
+  const onSignOut = () => {
+    signOut({ callbackUrl: '/' });
+  };
+
   return (
     <nav className={`row ${styles.nav}`}>
-      <Link href="/" passHref>
+      <Link href={homePage} passHref>
         <h3 className={styles.name}>
           <a>Header</a>
         </h3>
@@ -16,7 +21,7 @@ export default function Header(props) {
       <div className={styles.links}>
         <p>LINKS</p>
         <p>LINKS</p>
-        {session && <button onClick={signOut}>Logout</button>}
+        {session && <button onClick={onSignOut}>Logout</button>}
         {!session && <button onClick={signIn}>Login</button>}
       </div>
     </nav>

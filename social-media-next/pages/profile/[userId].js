@@ -1,6 +1,6 @@
 export default function getUserPage(props) {
   //probably use grid to style this places
-  console.log(props.id);
+  // console.log(props.id);
   return (
     <div className="container">
       <div>Portfolio</div>
@@ -23,9 +23,10 @@ export async function getServerSideProps(context) {
     };
   }
   //if does exist logic
-  const id = context.params._id;
-  console.log(id);
+  // const id = context.params._id;
+  // console.log(id);
   return {
-    props: { id }
+    // props: { id }
+    props: {}
   };
 }

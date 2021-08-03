@@ -1,4 +1,4 @@
-import Client from '../../lib/mongodb';
+import Client from '../../../utils/lib/mongodb';
 
 async function handler(req, res) {
   // console.log(req);

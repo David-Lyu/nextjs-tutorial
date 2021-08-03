@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import Adapters from 'next-auth/adapters';
 
-import User from '../../../model/User/User.js';
+import User from '../../../utils/model/User/User.js';
 
 //auth0 makes all these providers in one with one client secret etc. It is paid though for 700+ members
 const options = {
@@ -27,7 +27,13 @@ const options = {
     models: {
       User: User.User
     }
-  })
+  }),
+  callbacks: {
+    async session(session, user) {
+      session.user = user;
+      return session;
+    }
+  }
   // database: 'mongodb://localhost:27017/next-social'
 };
 
