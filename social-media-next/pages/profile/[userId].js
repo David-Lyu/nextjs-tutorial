@@ -1,4 +1,6 @@
-export default function getUserPage(props) {
+import { getSession } from 'next-auth/client';
+
+export default function getMyUserPage(props) {
   //probably use grid to style this places
   // console.log(props.id);
   return (
@@ -9,9 +11,18 @@ export default function getUserPage(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ req, res }) {
   //fetch user here
-
+  const session = await getSession({ req });
+  console.log(session);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/api/auth/error?error=AccessDenied',
+        permanent: false
+      }
+    };
+  }
   const data = 'stuff';
   //if doesn't exist then push back to original pageProps
   if (!data) {
@@ -27,6 +38,6 @@ export async function getServerSideProps(context) {
   // console.log(id);
   return {
     // props: { id }
-    props: {}
+    props: { session }
   };
 }

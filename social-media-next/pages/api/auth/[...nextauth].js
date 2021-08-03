@@ -33,6 +33,9 @@ const options = {
       session.user = user;
       return session;
     }
+  },
+  pages: {
+    error: '/api/auth/error'
   }
   // database: 'mongodb://localhost:27017/next-social'
 };

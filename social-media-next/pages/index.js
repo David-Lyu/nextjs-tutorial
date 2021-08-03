@@ -17,9 +17,10 @@ export default function Home() {
   const router = useRouter();
   const [session, loading] = useSession();
 
-  // console.log(session);
+  console.log(session);
+  let id = session?.user.urlPath || session?.user.id;
 
-  if (session) router.push('/profile/' + session.user.id);
+  if (session) router.push('/profile/' + id);
 
   //Form components
   const LOGIN_CONFIG = Object.freeze({
