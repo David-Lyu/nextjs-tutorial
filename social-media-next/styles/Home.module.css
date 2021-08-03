@@ -73,6 +73,10 @@
 
 @media screen and (min-width: 1000px) {
   .signup-section > div {
-    flex-basis: 20%;
+    flex-basis: 15%;
+  }
+
+  .signup-section > div > h3 {
+    text-align: center;
   }
 }

@@ -1,7 +1,13 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/client';
+import {
+  signIn,
+  signOut,
+  useSession,
+  getProviders,
+  getSession
+} from 'next-auth/client';
 
 import styles from '../styles/Home.module.css';
 import Form from '../components/modules/Form/form';
@@ -10,17 +16,12 @@ import { useEffect } from 'react';
 export default function Home() {
   const router = useRouter();
   const [session, loading] = useSession();
-  const providers = getProviders();
-
-  console.log(providers);
-
-  if (session) console.log(session);
 
   // if (session) router.push('/profile/' + );
 
   //Form components
   const LOGIN_CONFIG = Object.freeze({
-    url: '/api/login',
+    url: '/api/custom-sign/login',
     method: 'POST'
   });
   const LOGIN_INPUTS = Object.freeze([
@@ -32,7 +33,7 @@ export default function Home() {
   }
 
   const SIGNUP_CONFIG = Object.freeze({
-    url: '/api/create-new-user',
+    url: '/api/custom-sign/create-new-user',
     method: 'POST'
   });
   const SIGNUP_INPUTS = Object.freeze([

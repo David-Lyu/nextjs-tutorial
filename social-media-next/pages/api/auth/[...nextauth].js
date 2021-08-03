@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import Adapters from 'next-auth/adapters';
 
-import { UserAdapter } from '../../../model/User/User.js';
+import User from '../../../model/User/User.js';
 
 //auth0 makes all these providers in one with one client secret etc. It is paid though for 700+ members
 const options = {
@@ -23,23 +23,14 @@ const options = {
       from: process.env.EMAIL_FROM
     })
   ],
-  // adapter: Adapters.TypeORM.Adapter('mongodb://localhost:27017/next-social', {
-  //   models: {
-  //     User: UserAdapter
-  //   }
-  // })
-  database: 'mongodb://localhost:27017/next-social'
+  adapter: Adapters.TypeORM.Adapter('mongodb://localhost:27017/next-social', {
+    models: {
+      User: User.User
+    }
+  })
+  // database: 'mongodb://localhost:27017/next-social'
 };
 
 export default async function handler(req, res) {
   await NextAuth(req, res, options);
 }
-
-// export default NextAuth({
-//   providers: [
-//     Providers.Email({
-//       server: process.env.EMAIL_SERVER,
-//       from: process.env.EMAIL_CONSUMER_SECRET
-//     })
-//   ]
-// });
