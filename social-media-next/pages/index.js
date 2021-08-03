@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/client';
 
 import styles from '../styles/Home.module.css';
 import Form from '../components/modules/Form/form';
@@ -10,10 +10,13 @@ import { useEffect } from 'react';
 export default function Home() {
   const router = useRouter();
   const [session, loading] = useSession();
+  const providers = getProviders();
 
-  useEffect(() => {
-    if (session) router.push('/secret');
-  }, [session]);
+  console.log(providers);
+
+  if (session) console.log(session);
+
+  // if (session) router.push('/profile/' + );
 
   //Form components
   const LOGIN_CONFIG = Object.freeze({

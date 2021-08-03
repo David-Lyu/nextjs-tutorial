@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     };
   }
   //if does exist logic
-  const id = context.params.userId;
+  const id = context.params._id;
   console.log(id);
   return {
     props: { id }
