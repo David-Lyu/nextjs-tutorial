@@ -19,6 +19,7 @@ export default function Dashboard({ user }) {
         setPosts(data.posts);
       })
       .catch(console.error);
+    // eslint-disable-next-line
   }, []);
 
   return (
