@@ -12,7 +12,7 @@ export default function Dashboard({ user }) {
   return (
     <div>
       {!isLoaded && <div>Loading screen</div>}
-      {isLoaded && <div>{post.map()}</div>}
+      {isLoaded && <ul>{post.map((post) => {})}</ul>}
     </div>
   );
 }
