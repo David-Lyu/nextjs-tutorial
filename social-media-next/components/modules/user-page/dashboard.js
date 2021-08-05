@@ -6,13 +6,31 @@ import { useEffect, useState } from 'react';
 export default function Dashboard({ user }) {
   const userId = user.id;
   const [isLoaded, setIsLoaded] = useState(false);
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //client side rendering to get post based on user id or profile id
+    //want to use swr eventually
+    fetch(`/api/user/posts/get/${userId}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+        setIsLoaded(true);
+        setPosts(data.posts);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div>
       {!isLoaded && <div>Loading screen</div>}
-      {isLoaded && <ul>{post.map((post) => {})}</ul>}
+      {isLoaded && (
+        <ul>
+          {posts.map((post) => {
+            return <li key={post._id}>{post.message}</li>;
+          })}
+        </ul>
+      )}
     </div>
   );
 }

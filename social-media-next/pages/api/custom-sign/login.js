@@ -18,7 +18,7 @@ async function handler(req, res) {
   const email = data.email;
   //enter user in db and have email verify
   const connectedClient = await Client.connect();
-  const db = await Client.db('social-next');
+  const db = await Client.db('next-social');
   const userCollection = await db.collection('users');
   const results = await userCollection.findOne({ email: email });
 

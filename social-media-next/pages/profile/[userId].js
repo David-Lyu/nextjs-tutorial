@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/client';
+import Dashboard from '../../components/modules/user-page/Dashboard';
 
 export default function getMyUserPage(props) {
   //probably use grid to style this places
@@ -6,7 +7,7 @@ export default function getMyUserPage(props) {
   return (
     <div className="container">
       <div>Portfolio</div>
-      feed
+      <Dashboard user={props.session.user} />
     </div>
   );
 }
