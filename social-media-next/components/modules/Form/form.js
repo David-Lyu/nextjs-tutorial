@@ -86,8 +86,7 @@ function Form({ inputs, formName, config, submitFunc }) {
       },
       body: JSON.stringify(body)
     };
-    console.log(body);
-    // fetch();
+
     const response = await (await fetch(config.url, fetchConfig)).json();
     if (!response) {
       const message = 'Could not get data';
