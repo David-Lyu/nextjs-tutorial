@@ -42,6 +42,11 @@
   margin-left: 0.5rem;
 }
 
+.show-register-click,
+.show-login-click {
+  display: none;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
@@ -69,6 +74,7 @@
 .signup-section > div > h3 {
   text-align: left;
 }
+
 /*need to change parent div of forms with media query about 1000px to be 20%  */
 
 @media screen and (min-width: 1000px) {
@@ -79,4 +85,18 @@
   .signup-section > div > h3 {
     text-align: center;
   }
+}
+
+@media screen and (max-width: 800px) {
+  .register {
+    display: none;
+  }
+
+  .show-register-click,
+  .show-login-click {
+    display: block;
+  }
+
+  /* .login {
+  } */
 }

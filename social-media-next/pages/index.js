@@ -11,15 +11,17 @@ import {
 
 import styles from '../styles/Home.module.css';
 import Form from '../components/modules/Form/form';
-import { useEffect } from 'react';
+import { useRef } from 'react';
 
 export default function Home() {
   const router = useRouter();
   const [session, loading] = useSession();
+  const signUpEle = useRef(null);
+  const signInEle = useRef(null);
 
-  console.log(session);
   let id = session?.user.urlPath || session?.user.id;
 
+  //can change callback from nextjs will work on this later
   if (session) router.push('/profile/' + id);
 
   //Form components
@@ -63,7 +65,7 @@ export default function Home() {
       <main className={styles.main + ' row'}>
         <h1>Welcome to Social Media</h1>
         <section className={styles['signup-section']}>
-          <div className={styles.register}>
+          <div className={styles.register} ref={signUpEle}>
             <h3> New? Please register</h3>
             <Form
               inputs={SIGNUP_INPUTS}
@@ -71,8 +73,17 @@ export default function Home() {
               config={SIGNUP_CONFIG}
               submitFunc={signupFunc}
             />
+            <div className={styles['show-login-click']}>
+              <p>To sign-in click on the link below</p>
+              <button
+                onClick={() => {
+                  showSignUpOrIn(signInEle, signUpEle, 'signup');
+                }}>
+                Click here to login
+              </button>
+            </div>
           </div>
-          <div className={styles.login}>
+          <div className={styles.login} ref={signInEle}>
             <h3>Welcome back please login</h3>
             <Form
               inputs={LOGIN_INPUTS}
@@ -83,9 +94,34 @@ export default function Home() {
               Or signin with GitHub{' '}
               <button onClick={signIn}>Github Sign in</button>
             </div>
+            <div className={styles['show-register-click']}>
+              <p>To sign-up click on the link below</p>
+              <button
+                onClick={() => {
+                  showSignUpOrIn(signInEle, signUpEle, 'signin');
+                }}>
+                Click here to register
+              </button>
+            </div>
           </div>
         </section>
       </main>
     </div>
   );
+}
+//helper functions
+
+function showSignUpOrIn(signInElement, signUpElement, from) {
+  // console.log(signInElement, signUpElement);
+  if (from === 'signup') {
+    //want to show sign in
+    signInElement.current.style.display = 'block';
+    signUpElement.current.style.display = 'none';
+  }
+
+  if (from === 'signin') {
+    //want to show sign up
+    signInElement.current.style.display = 'none';
+    signUpElement.current.style.display = 'block';
+  }
 }
