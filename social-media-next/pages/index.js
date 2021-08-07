@@ -112,7 +112,6 @@ export default function Home() {
 //helper functions
 
 function showSignUpOrIn(signInElement, signUpElement, from) {
-  // console.log(signInElement, signUpElement);
   if (from === 'signup') {
     //want to show sign in
     signInElement.current.style.display = 'block';
