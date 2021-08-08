@@ -1,5 +1,7 @@
 import { getSession } from 'next-auth/client';
 import { useRef } from 'react';
+
+// import storage from '../../utils/lib/firebase/firebase';
 import Dashboard from '../../components/modules/user-page/Dashboard';
 
 export default function GetMyUserPage(props) {
@@ -12,10 +14,10 @@ export default function GetMyUserPage(props) {
     const postTextValue = postTextRef.current.value;
     const postImageValue = postImageRef.current.value;
 
+    //fetch an api
+
+    //move all this to the api directory
     //gets the file typeof
-    const ImageSplit = postImageValue.split('.');
-    const fileType = ImageSplit[ImageSplit.length - 1];
-    console.log(fileType);
 
     return null;
   };
