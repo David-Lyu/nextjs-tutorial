@@ -5,14 +5,13 @@ export default function handler(req, res) {
   const postTextValue = data.postMessage;
   const postImageValue = data.postFile;
   let imageURL = '';
-  console.log(data);
 
-  const ImageSplit = postImageValue.split('.');
-  const fileType = ImageSplit[ImageSplit.length - 1];
-  console.log(fileType);
+  const imageFile = getFileType(data.postFile);
+
+  const fileType = imageFile[0];
 
   const storage = getStorage();
-  const fileRef = ref(storage, 'images/' + imageSplit[0]);
+  const fileRef = ref(storage, 'images/' + imageFile[1]);
   const metadata = {
     contentType: 'image/' + fileType
   };
@@ -40,7 +39,22 @@ export default function handler(req, res) {
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log('file available at downLoadURL');
         imageURL = downloadURL;
+        //add the fetch method to go to post db in mongo
       });
     }
   );
+}
+
+/**
+ *
+ * @param imageFile - the file name that gets passed down to this place
+ * @returns [String,String] with 1st index
+ * - that is the format of the image
+ * - the name of the file
+ */
+function getFileType(imageFile) {
+  console.log(imageFile);
+  const ImageSplit = imageFile.split('.');
+  const fileType = ImageSplit[ImageSplit.length - 1];
+  return [fileType, ImageSplit[0]];
 }
