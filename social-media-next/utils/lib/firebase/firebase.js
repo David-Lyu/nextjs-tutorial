@@ -1,12 +1,12 @@
 // import * as admin from 'firebase-admin';
-import firebase from 'firebase/app';
-import { ref } from 'firebase/storage';
+import firebase from 'firebase';
+import 'dotenv';
 const ENV = process.env;
 
-admin.initializeApp({
-  credentials: admin.credential.applicationDefault(),
-  databaseURL: `https://${ENV.FIREBASE_DATABASE_NAME}.firebaseio.com`
-});
+// admin.initializeApp({
+//   credentials: admin.credential.applicationDefault(),
+//   databaseURL: `https://${ENV.FIREBASE_DATABASE_NAME}.firebaseio.com`
+// });
 //creating firebase bucket credentials and etc here
 const firebaseConfig = {
   apiKey: ENV.FIREBASE_API_KEY,
