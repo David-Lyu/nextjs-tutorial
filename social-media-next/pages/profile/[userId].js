@@ -1,5 +1,4 @@
 import { getSession } from 'next-auth/client';
-import Image from 'next/image';
 import { useState, useRef } from 'react';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
@@ -11,32 +10,41 @@ export default function GetMyUserPage(props) {
   const postImageRef = useRef(null);
   const [imageUrl, setImageUrl] = useState('');
   const [isFormDisable, setIsFormDisable] = useState(false);
+  const [reRender, setReRender] = useState(false);
 
   const onPostSubmit = (e) => {
     e.preventDefault();
     const postTextValue = postTextRef.current.value;
-    console.log(isFormDisable);
 
     //fetch an api
     const formData = {
+      userId: props.session.user.id,
       message: postTextValue,
       image: imageUrl
     };
 
     const config = {
       method: 'POST',
-      body: formData,
+      body: JSON.stringify(formData),
       headers: {
         'Content-Type': 'application/json'
       }
     };
-    fetch('/api/user/posts/post', config);
-    //move all this to the api directory
-    //gets the file typeof
+    fetch('/api/user/posts/post', config)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        postImageRef.current.value = null;
+        postTextRef.current.value = null;
+        setReRender(!reRender);
+      });
 
     return null;
   };
 
+  //sends the file to firebase
   const imageOnChange = () => {
     setIsFormDisable(true);
     const imageFile = getFileType(postImageRef.current.value);
@@ -45,7 +53,6 @@ export default function GetMyUserPage(props) {
     const metadata = {
       contentType: 'image/' + fileType
     };
-    // console.log(postImageRef.current.files[0]);
     const uploadTask = storageRef
       .child('images/test')
       .put(postImageRef.current.files[0], metadata);
@@ -96,7 +103,7 @@ export default function GetMyUserPage(props) {
         <button disabled={isFormDisable}>Submit</button>
       </form>
       <div>Portfolio</div>
-      <Dashboard user={props.session.user} />
+      <Dashboard user={props.session.user} reRender={reRender} />
     </div>
   );
 }
@@ -104,7 +111,6 @@ export default function GetMyUserPage(props) {
 export async function getServerSideProps({ req, res }) {
   //fetch user here
   const session = await getSession({ req });
-  console.log(session);
   if (!session) {
     return {
       redirect: {

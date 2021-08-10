@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //this should be either client side or rendered with server-side
 //might be just a component
 //should get id of user wanting to display
-export default function Dashboard({ user }) {
+export default React.memo(function Dashboard({ user, reRender }) {
   const userId = user.id;
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -20,7 +20,7 @@ export default function Dashboard({ user }) {
       })
       .catch(console.error);
     // eslint-disable-next-line
-  }, []);
+  }, [reRender]);
 
   return (
     <div>
@@ -34,4 +34,4 @@ export default function Dashboard({ user }) {
       )}
     </div>
   );
-}
+});
