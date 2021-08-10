@@ -1,8 +1,9 @@
 import { getSession } from 'next-auth/client';
+import Image from 'next/image';
 import { useState, useRef } from 'react';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
-// import storage from '../../utils/lib/firebase/firebase';
+import storage from '../../utils/lib/firebase/firebase';
 import Dashboard from '../../components/modules/user-page/Dashboard';
 
 export default function GetMyUserPage(props) {
@@ -29,7 +30,7 @@ export default function GetMyUserPage(props) {
         'Content-Type': 'application/json'
       }
     };
-    // fetch('/api/user/posts/post', config);
+    fetch('/api/user/posts/post', config);
     //move all this to the api directory
     //gets the file typeof
 
@@ -40,12 +41,14 @@ export default function GetMyUserPage(props) {
     setIsFormDisable(true);
     const imageFile = getFileType(postImageRef.current.value);
     const fileType = imageFile[0];
-    const storage = getStorage();
-    const fileRef = ref(storage, 'images/' + imageFile[1]);
+    const storageRef = storage.ref();
     const metadata = {
       contentType: 'image/' + fileType
     };
-    const uploadTask = uploadBytes(storageRef, postImageValue, metadata);
+    // console.log(postImageRef.current.files[0]);
+    const uploadTask = storageRef
+      .child('images/test')
+      .put(postImageRef.current.files[0], metadata);
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -62,12 +65,16 @@ export default function GetMyUserPage(props) {
         }
       },
       (error) => {
-        //handle unsuccessful uploads
+        switch (error.code) {
+          default:
+            console.log(error);
+        }
+        setIsFormDisable(false);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('file available at downLoadURL');
-          setImageURL(downloadURL);
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log(downloadURL);
+          setImageUrl(downloadURL);
           setIsFormDisable(false);
         });
       }
@@ -84,7 +91,8 @@ export default function GetMyUserPage(props) {
           type="file"
           id="post-image"
           ref={postImageRef}
-          onChange={imageOnChange}></input>
+          onChange={imageOnChange}
+          disabled={isFormDisable}></input>
         <button disabled={isFormDisable}>Submit</button>
       </form>
       <div>Portfolio</div>

@@ -1,21 +1,27 @@
-// import * as admin from 'firebase-admin';
-import firebase from 'firebase';
-import 'dotenv';
-const ENV = process.env;
+import firebase from 'firebase/app';
+import 'firebase/storage';
 
-// admin.initializeApp({
-//   credentials: admin.credential.applicationDefault(),
-//   databaseURL: `https://${ENV.FIREBASE_DATABASE_NAME}.firebaseio.com`
-// });
 //creating firebase bucket credentials and etc here
-const firebaseConfig = {
-  apiKey: ENV.FIREBASE_API_KEY,
-  authDomain: ENV.FIREBASE_AUTH_DOMAIN,
-  // databaseURL: `https://${ENV.FIREBASE_PROJECT_ID}.firebaseio.com`,
-  storageBucket: ENV.FIREBASE_STORAGE_BUCKET
-};
+// const firebaseConfig = {
+//   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+//   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+//   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+// };
 
-firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+  apiKey: 'AIzaSyC6rTCgMnGyhkA4dBIBCi2lobd7G1ZY5M0',
+  authDomain: 'next-social-picture.firebaseapp.com',
+  projectId: 'next-social-picture',
+  storageBucket: 'next-social-picture.appspot.com',
+  messagingSenderId: '813558001513',
+  appId: '1:813558001513:web:fdec643e13e7b5aa9d17f8',
+  measurementId: 'G-TJZY22Z0X4'
+};
+// let firebaseApp = null;
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const storage = firebase.storage();
 export default storage;
