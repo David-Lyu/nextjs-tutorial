@@ -1,7 +1,7 @@
 // import styles from '../../styles/Home.module.css';
 import { useSession, signOut, signIn } from 'next-auth/client';
 import Link from 'next/link';
-import SearchBar from '../../modules/SearchBar/SearchBar';
+import SearchBar from '../../modules/Header/SearchBar/SearchBar';
 import styles from './header.module.css';
 
 export default function Header(props) {
