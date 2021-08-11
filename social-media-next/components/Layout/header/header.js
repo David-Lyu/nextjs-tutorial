@@ -1,6 +1,7 @@
 // import styles from '../../styles/Home.module.css';
 import { useSession, signOut, signIn } from 'next-auth/client';
 import Link from 'next/link';
+import SearchBar from '../../modules/SearchBar/SearchBar';
 import styles from './header.module.css';
 
 export default function Header(props) {
@@ -19,7 +20,7 @@ export default function Header(props) {
         </h3>
       </Link>
       <div className={styles.links}>
-        <p>LINKS</p>
+        <SearchBar />
         <p>LINKS</p>
         {session && <button onClick={onSignOut}>Logout</button>}
         {!session && <button onClick={signIn}>Login</button>}
