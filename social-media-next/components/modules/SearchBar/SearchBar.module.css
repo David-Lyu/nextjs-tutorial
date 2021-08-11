@@ -1,4 +1,13 @@
 .search-bar-parent {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.search-input {
+  position: relative;
+}
+
+.search-results {
+  position: absolute;
 }

@@ -1,20 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
+import Styles from './SearchBar.module.css';
 
 export default function SearchBar(props) {
   const [searchVal, setSearchVal] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   //should render after every key stroke
-  function onSearchChange(e) {
+  async function onSearchChange(e) {
     setSearchVal(e.currentTarget.value);
-    if (e.currentTarget.value.length < 3) return;
-    console.log(searchVal);
   }
+
+  useEffect(() => {
+    console.log(searchVal);
+    if (searchVal.length < 3) return;
+    fetch('/api/user/users?searchVal=' + searchVal)
+      .then((resp) => resp.json())
+      .then((data) => setSearchResults(data.results));
+  }, [searchVal]);
+
   return (
-    <div>
+    <div className={Styles['search-bar-parent']}>
       <input type="search" onChange={onSearchChange} value={searchVal} />
       <div>
         {searchResults.map((result) => {
-          return <p key="search.user.id">{search}</p>;
+          return (
+            <Link href={`/dashboard/${result.id}`} key={result.id}>
+              {result.firstName + ' ' + result.lastName}
+            </Link>
+          );
         })}
       </div>
     </div>
