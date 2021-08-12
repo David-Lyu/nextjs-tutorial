@@ -17,7 +17,7 @@ export default function ProfileButton(props) {
       </li>
       <li>
         <Link href={'/'}>
-          <a onClick={signOut}>Logout</a>
+          <a onClick={() => signOut({ callbackUrl: '/' })}>Logout</a>
         </Link>
       </li>
     </ul>
