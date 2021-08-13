@@ -6,8 +6,28 @@
 
 .search-input {
   position: relative;
+  height: 2em;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding-left: 5px;
 }
 
 .search-results {
+  position: relative;
+}
+
+.search-results > ul {
+  background-color: #2cd3ce;
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.search-results li:first-child {
+  padding-top: 0.5em;
+}
+
+.search-results li {
+  padding: 0 0.5em 1em 0.5em;
 }

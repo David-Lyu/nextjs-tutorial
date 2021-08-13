@@ -1,9 +1,10 @@
 .nav {
   display: flex;
   justify-content: space-between;
-  background-color: mediumspringgreen;
+  background-color: #00fa9a;
   max-height: 10em;
   margin: auto;
+  margin-bottom: 0.5em;
 }
 
 .nav > * {
@@ -13,7 +14,15 @@
 
 .links {
   display: flex;
-  cursor: pointer;
+  justify-content: space-evenly;
+}
+
+.links > *:first-child {
+  flex-basis: 75%;
+}
+
+.links > button {
+  flex-basis: 25%;
 }
 
 .links > * {
@@ -22,4 +31,21 @@
 
 .name {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav {
+    position: sticky;
+    top: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .links {
+    /* flex-basis: 50%; */
+    width: 50%;
+  }
+  .links > *:first-child {
+    width: 50%;
+  }
 }

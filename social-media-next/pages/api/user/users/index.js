@@ -6,14 +6,21 @@ export default async function handler(req, res) {
   }
   const { searchVal } = req.query;
   console.log(searchVal);
-  const regex = new RegExp(`^${searchVal}`, 'i');
+  const regex = new RegExp(`.*${searchVal}.*`, 'i');
+  console.log(regex);
 
   const clientConnect = await Client.connect();
   const db = await clientConnect.db('next-social');
   const userCollection = await db.collection('users');
 
   const users = await userCollection.find({
-    name: regex
+    $or: [
+      { name: regex },
+      { username: regex },
+      { firstName: regex },
+      { lastName: regex },
+      { email: regex }
+    ]
   });
   const results = [];
 

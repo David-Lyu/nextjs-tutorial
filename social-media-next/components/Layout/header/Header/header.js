@@ -19,7 +19,6 @@ export default function Header(props) {
       </Link>
       <div className={styles.links}>
         <SearchBar />
-        <p>LINKS</p>
         {session && <ProfileButton userId={session.user.id} />}
         {!session && <button onClick={signIn}>Login</button>}
       </div>

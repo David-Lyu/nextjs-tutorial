@@ -47,13 +47,6 @@
   display: none;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-
 .main {
   display: flex;
   flex-direction: column;
@@ -71,19 +64,15 @@
   justify-content: space-evenly;
 }
 
-.signup-section > div > h3 {
-  text-align: left;
+.signup-section > div {
+  max-width: 200px;
 }
 
 /*need to change parent div of forms with media query about 1000px to be 20%  */
-
-@media screen and (min-width: 1000px) {
-  .signup-section > div {
-    flex-basis: 15%;
-  }
-
-  .signup-section > div > h3 {
-    text-align: center;
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
   }
 }
 

@@ -6,7 +6,9 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+ul,
+li {
   padding: 0;
   margin: 0;
   font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
@@ -22,6 +24,10 @@ a {
   box-sizing: margin-box;
 }
 
+li {
+  list-style: none;
+}
+
 .container {
   padding: 0 0.5rem;
   display: flex;
@@ -35,6 +41,10 @@ a {
   width: 90vw;
 }
 
-.container > * {
-  /* margin: 0 0 0.5em 0; */
+@media only screen and (max-width: 600px) {
+  .container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
 }
