@@ -62,6 +62,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <main className={styles.main + ' row'}>
         <h1>Welcome to Social Media</h1>
         <section className={styles['signup-section']}>
@@ -73,6 +74,7 @@ export default function Home() {
               config={SIGNUP_CONFIG}
               submitFunc={signupFunc}
             />
+
             <div className={styles['show-login-click']}>
               <p>To sign-in click on the link below</p>
               <button
@@ -83,6 +85,7 @@ export default function Home() {
               </button>
             </div>
           </div>
+
           <div className={styles.login} ref={signInEle}>
             <h3>Welcome back please login</h3>
             <Form
@@ -94,6 +97,7 @@ export default function Home() {
               Or signin with GitHub{' '}
               <button onClick={signIn}>Github Sign in</button>
             </div>
+
             <div className={styles['show-register-click']}>
               <p>To sign-up click on the link below</p>
               <button

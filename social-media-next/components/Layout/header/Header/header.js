@@ -11,16 +11,18 @@ export default function Header(props) {
   const homePage = session ? `/profile/${session.user.id}` : '/';
 
   return (
-    <nav className={`row ${styles.nav}`}>
-      <Link href={homePage} passHref>
-        <h3 className={styles.name}>
-          <a>Header</a>
-        </h3>
-      </Link>
-      <div className={styles.links}>
-        <SearchBar />
-        {session && <ProfileButton userId={session.user.id} />}
-        {!session && <button onClick={signIn}>Login</button>}
+    <nav className={styles['super-nav']}>
+      <div className={`container ${styles.nav}`}>
+        <Link href={homePage} passHref>
+          <h3 className={styles.name}>
+            <a>Header</a>
+          </h3>
+        </Link>
+        <div className={styles.links}>
+          <SearchBar />
+          {session && <ProfileButton userId={session.user.id} />}
+          {!session && <button onClick={signIn}>Login</button>}
+        </div>
       </div>
     </nav>
   );
