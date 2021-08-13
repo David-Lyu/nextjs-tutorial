@@ -26,12 +26,3 @@ export default function Header(props) {
     </nav>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const session = getSession();
-//   return {
-//     prop: {
-//       session
-//     }
-//   };
-// }

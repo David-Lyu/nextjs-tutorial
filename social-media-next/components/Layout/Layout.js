@@ -1,4 +1,4 @@
-import Header from './header/header';
+import Header from './header/Header/header';
 
 export default function Layout(props) {
   return (
