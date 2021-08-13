@@ -74,7 +74,7 @@ export default function Home() {
               config={SIGNUP_CONFIG}
               submitFunc={signupFunc}
             />
-
+            {/* This is hidden till <600px */}
             <div className={styles['show-login-click']}>
               <p>To sign-in click on the link below</p>
               <button
@@ -97,7 +97,7 @@ export default function Home() {
               Or signin with GitHub{' '}
               <button onClick={signIn}>Github Sign in</button>
             </div>
-
+            {/* This is hidden till <600px */}
             <div className={styles['show-register-click']}>
               <p>To sign-up click on the link below</p>
               <button
@@ -118,13 +118,17 @@ export default function Home() {
 function showSignUpOrIn(signInElement, signUpElement, from) {
   if (from === 'signup') {
     //want to show sign in
-    signInElement.current.style.display = 'block';
-    signUpElement.current.style.display = 'none';
+    signInElement.current.classList.remove(styles.hide);
+    signUpElement.current.classList.remove(styles.show);
+    signInElement.current.classList.add(styles.show);
+    signUpElement.current.classList.add(styles.hide);
   }
 
   if (from === 'signin') {
     //want to show sign up
-    signInElement.current.style.display = 'none';
-    signUpElement.current.style.display = 'block';
+    signInElement.current.classList.remove(styles.show);
+    signUpElement.current.classList.remove(styles.hide);
+    signInElement.current.classList.add(styles.hide);
+    signUpElement.current.classList.add(styles.show);
   }
 }
