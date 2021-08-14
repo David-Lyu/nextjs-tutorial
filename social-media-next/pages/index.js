@@ -6,21 +6,26 @@ import {
   signOut,
   useSession,
   getProviders,
-  getSession
+  getSession,
+  getCsrfToken
 } from 'next-auth/client';
+
+// import { csrfToken } from 'next-auth';
+import { useRef } from 'react';
+import { AiFillGithub, AiOutlineMail } from 'react-icons/ai';
 
 import styles from '../styles/Home.module.css';
 import Form from '../components/modules/Form/form';
-import { useRef } from 'react';
 
-export default function Home() {
+export default function Home(props) {
   const router = useRouter();
   const [session, loading] = useSession();
   const signUpEle = useRef(null);
   const signInEle = useRef(null);
 
-  let id = session?.user.urlPath || session?.user.id;
+  console.log(session);
 
+  let id = session?.user.urlPath || session?.user.id;
   //can change callback from nextjs will work on this later
   if (session) router.push('/profile/' + id);
 
@@ -91,11 +96,17 @@ export default function Home() {
             <Form
               inputs={LOGIN_INPUTS}
               formName="Login"
-              config={LOGIN_CONFIG}
-              submitFunc={loginFunc}></Form>
+              csrfToken={props.csrfToken}
+              onSubmit={(e) => {
+                loginOnSubmit(e, signIn);
+              }}></Form>
             <div>
-              Or signin with GitHub{' '}
-              <button onClick={signIn}>Github Sign in</button>
+              Or signin with these:
+              <AiFillGithub
+                onClick={() => signIn('github')}
+                aria-label="GitHub"
+              />
+              <AiOutlineMail onClick={() => signIn()} aria-label="email" />
             </div>
             {/* This is hidden till <600px */}
             <div className={styles['show-register-click']}>
@@ -113,7 +124,24 @@ export default function Home() {
     </div>
   );
 }
+
+export async function getServerSideProps({ req, res }) {
+  const csrfToken = await getCsrfToken({ req });
+  return {
+    props: {
+      csrfToken: csrfToken
+    }
+  };
+}
+
 //helper functions
+//need to get error handling
+function loginOnSubmit(e, signIn) {
+  e.preventDefault();
+  const email = e.currentTarget.children[1].children[0].children[0].value;
+  const password = e.currentTarget.children[2].children[0].children[0].value;
+  signIn('credentials', { username: email, password, callback: '/' });
+}
 
 function showSignUpOrIn(signInElement, signUpElement, from) {
   if (from === 'signup') {

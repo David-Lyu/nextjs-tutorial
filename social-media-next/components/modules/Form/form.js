@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classes from './form.module.css';
 ///////////////////////ONSUBMIT ON THE WORKS
 /**
- * This component takes in props called inputs, formName, config, submitFunc.
+ * This component takes in props called inputs with properties: formName, config, submitFunc, onSubmit.
  * @param inputs is an array of an object with two properties:
  *    1) label: the name you want to put for the input.
  *    2) type: the input type you want to use.
@@ -11,12 +11,14 @@ import classes from './form.module.css';
  *  @param formName is the name of the form you want. Helps create react keys dynamically
  *  @param config is the configuration for the http request, so url and method
  *  @param submitFuc is a function predefined to do any logic with the data.
+ *  @param csrfToken is a token to help prevent csrf attacks
+ *  @param onSubmit will be used to overwrite the default onSubmit
  * It will also create the a controlled form for input verification
  * The body data that is being sent will be in JSON format, with the keys camelCased.
  *  - The label can have spaces in between and this will automatically take them
  * @returns Returns a form with its components
  */
-function Form({ inputs, formName, config, submitFunc }) {
+function Form({ inputs, formName, config, submitFunc, csrfToken, onSubmit }) {
   const numOfInputs = inputs.length;
   const createState = {};
   const onChange = {};
@@ -39,65 +41,66 @@ function Form({ inputs, formName, config, submitFunc }) {
       checkInputs(inputTag, i);
     };
   }
+  if (!onSubmit) {
+    onSubmit = async (e) => {
+      e.preventDefault();
+      let body = {};
+      console.log('start onSubmit');
+      for (let i = 0; i < numOfInputs; i++) {
+        if (!createState[i].state || !createState[i].state.value) {
+          const message = 'Please fill out all the form inputs';
+          helpSetErrors(errors, setErrors, formName, message);
+          return;
+        }
 
-  async function onSubmit(e) {
-    e.preventDefault();
-    let body = {};
-    console.log('start onSubmit');
-    for (let i = 0; i < numOfInputs; i++) {
-      if (!createState[i].state || !createState[i].state.value) {
-        const message = 'Please fill out all the form inputs';
-        helpSetErrors(errors, setErrors, formName, message);
-        return;
+        //this creates the name for the data in the object making the label text into camelCase
+        //by splitting into arrays and capitalizing the first letter of the string its
+        //  split into except the first index(0) and then joins the arrays back together
+        let nameChange = inputs[i].label.toLowerCase().split(' ');
+        if (nameChange.length > 1) {
+          for (let i = 0; i < nameChange.length; i++) {
+            if (i === 0) continue;
+            const string = nameChange[i];
+            nameChange[i] = string[0].toUpperCase() + string.slice(1);
+          }
+        }
+
+        body[nameChange.join('')] = createState[i].state.value;
       }
 
-      //this creates the name for the data in the object making the label text into camelCase
-      //by splitting into arrays and capitalizing the first letter of the string its
-      //  split into except the first index(0) and then joins the arrays back together
-      let nameChange = inputs[i].label.toLowerCase().split(' ');
-      if (nameChange.length > 1) {
-        for (let i = 0; i < nameChange.length; i++) {
-          if (i === 0) continue;
-          const string = nameChange[i];
-          nameChange[i] = string[0].toUpperCase() + string.slice(1);
+      if (errors.formName?.hasError) {
+        helpSetErrors(errors, setErrors, formName, '');
+      }
+
+      console.log('after check errors');
+      for (const key in errors) {
+        const error = errors[key];
+        if (error.hasError) {
+          const message = 'Not submitted please clear errors';
+          helpSetErrors(errors, setErrors, formName, message);
+          return;
         }
       }
+      const fetchConfig = {
+        method: config.method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      };
 
-      body[nameChange.join('')] = createState[i].state.value;
-    }
-
-    if (errors.formName?.hasError) {
-      helpSetErrors(errors, setErrors, formName, '');
-    }
-
-    console.log('after check errors');
-    for (const key in errors) {
-      const error = errors[key];
-      if (error.hasError) {
-        const message = 'Not submitted please clear errors';
+      const response = await (await fetch(config.url, fetchConfig)).json();
+      if (!response) {
+        const message = 'Could not get data';
         helpSetErrors(errors, setErrors, formName, message);
-        return;
       }
-    }
-    const fetchConfig = {
-      method: config.method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
+      submitFunc(response);
     };
-
-    const response = await (await fetch(config.url, fetchConfig)).json();
-    if (!response) {
-      const message = 'Could not get data';
-      helpSetErrors(errors, setErrors, formName, message);
-    }
-    submitFunc(response);
-    console.log(response);
   }
 
   return (
     <form onSubmit={onSubmit} className={classes.form}>
+      {csrfToken && <input type="hidden" value={csrfToken} key="csrf" />}
       {inputs.map((input, index) => (
         <div key={formName + input.label}>
           <label>
