@@ -31,8 +31,8 @@
   -webkit-user-select: none;
 
   /*
-     Introduced in Internet Explorer 10.
-     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    Introduced in Internet Explorer 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
    */
   -ms-user-select: none;
   user-select: none;
@@ -41,14 +41,68 @@
 .profile-options > :first-child {
   background-color: transparent;
   inset: 0px 0 0 8px;
-  z-index: 1000;
+  z-index: 1;
   color: var(--secondary-color);
 }
+
+.rotate-caret {
+  animation-duration: 1s;
+  animation-name: clockwise;
+}
+
+@keyframes clockwise {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+.un-rotate-caret {
+  animation-duration: 1s;
+  animation-name: counter-clockwise;
+}
+
+@keyframes counter-clockwise {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(-180deg);
+  }
+}
+
+/*
+https://stackoverflow.com/questions/25863070/how-to-style-the-div-to-triangle-using-css
+.profile-options > :first-child::after {
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: -16px;
+  top: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-left: 16px solid red;
+  border-bottom: 8px solid transparent;
+  width: 0;
+  z-index: 1000;
+} */
 
 .profile-options > :nth-child(2) {
   inset: 10px 0 0 -60px;
   width: 120px;
-  height: 200px;
+  height: 120px;
   border: 0.5px solid #808080;
   border-radius: 3px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  margin: 0;
+  z-index: 3;
 }
