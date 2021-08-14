@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  z-index: 2;
 }
 
 .search-input {
@@ -17,11 +18,13 @@
 }
 
 .search-results > ul {
-  background-color: #2cd3ce;
+  background-color: var(--secondary-color);
   position: absolute;
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  border-radius: 0 0 5px 5px;
 }
 
 .search-results li:first-child {
@@ -29,5 +32,18 @@
 }
 
 .search-results li {
-  padding: 0 0.5em 1em 0.5em;
+  cursor: pointer;
+  padding: 0.5em;
+  border-bottom: var(--main-color) solid 0.5px;
+}
+
+.search-results li:last-child {
+  border-radius: 0 0 5px 5px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  margin: 0;
 }

@@ -33,18 +33,35 @@
   max-width: 200px;
 }
 
-.register {
-  display: none;
+.signup-section > div > * {
+  margin-top: 1rem;
+}
+
+.login > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.svg-icons {
+  margin-top: 5px;
+  height: 45px;
+}
+
+.svg-icons > * {
+  font-size: 2rem;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.show-register-click a,
+.show-login-click a {
+  cursor: pointer;
+  color: var(--secondary-color);
 }
 
 /* These 2 below is to toggle the signin and up options */
-.show {
-  display: block;
-}
-
-.hide {
-  display: none;
-}
 
 @media (max-width: 600px) {
   .grid {

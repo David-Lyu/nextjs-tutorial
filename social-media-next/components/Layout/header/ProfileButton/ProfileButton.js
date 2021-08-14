@@ -1,25 +1,31 @@
-import Link from 'next/link';
-import { signOut } from 'next-auth/client';
+import { useState, useRef, useEffect } from 'react';
+import { GoPerson } from 'react-icons/go';
+import { AiFillCaretUp, AiOutlineCaretDown } from 'react-icons/ai';
+import Image from 'next/image';
+import styles from './ProfileButton.module.css';
+
+import ProfileOptions from './ProfileOptions';
 
 export default function ProfileButton(props) {
-  const { userId } = props;
+  const { userId, profilePic } = props;
+  const [showOptions, setShowOptions] = useState('hide');
+
+  function onDisplayClick(e) {
+    if (showOptions === 'hide') setShowOptions('show');
+    if (showOptions === 'show') setShowOptions('hide');
+  }
+
   return (
-    <ul>
-      <li>
-        <Link href={`/profile/${userId}`}>
-          <a>My profile</a>
-        </Link>
-      </li>
-      <li>
-        <Link href={`/profile/settings`}>
-          <a>Settings</a>
-        </Link>
-      </li>
-      <li>
-        <Link href={'/'}>
-          <a onClick={() => signOut({ callbackUrl: '/' })}>Logout</a>
-        </Link>
-      </li>
-    </ul>
+    <div className={styles['profile-parent']}>
+      <div className={styles['profile-icon']} onClick={onDisplayClick}>
+        {profilePic && <Image src={profilePic} alt="profile picture" />}
+        {!profilePic && <GoPerson />}
+        <AiOutlineCaretDown />
+      </div>
+      <div className={styles['profile-options'] + ' ' + showOptions}>
+        <AiFillCaretUp />
+        <ProfileOptions />
+      </div>
+    </div>
   );
 }

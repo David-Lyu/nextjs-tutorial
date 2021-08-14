@@ -9,8 +9,6 @@ import {
   getSession,
   getCsrfToken
 } from 'next-auth/client';
-
-// import { csrfToken } from 'next-auth';
 import { useRef } from 'react';
 import { AiFillGithub, AiOutlineMail } from 'react-icons/ai';
 
@@ -82,12 +80,12 @@ export default function Home(props) {
             {/* This is hidden till <600px */}
             <div className={styles['show-login-click']}>
               <p>To sign-in click on the link below</p>
-              <button
+              <a
                 onClick={() => {
                   showSignUpOrIn(signInEle, signUpEle, 'signup');
                 }}>
                 Click here to login
-              </button>
+              </a>
             </div>
           </div>
 
@@ -101,22 +99,24 @@ export default function Home(props) {
                 loginOnSubmit(e, signIn);
               }}></Form>
             <div>
-              Or signin with these:
-              <AiFillGithub
-                onClick={() => signIn('github')}
-                aria-label="GitHub"
-              />
-              <AiOutlineMail onClick={() => signIn()} aria-label="email" />
-            </div>
-            {/* This is hidden till <600px */}
-            <div className={styles['show-register-click']}>
-              <p>To sign-up click on the link below</p>
-              <button
-                onClick={() => {
-                  showSignUpOrIn(signInEle, signUpEle, 'signin');
-                }}>
-                Click here to register
-              </button>
+              <p>Or signin/signup with these:</p>
+              <div className={styles['svg-icons']}>
+                <AiFillGithub
+                  onClick={() => signIn('github')}
+                  aria-label="GitHub"
+                />
+                <AiOutlineMail onClick={() => signIn()} aria-label="email" />
+              </div>
+              {/* This is hidden till <600px */}
+              <div className={styles['show-register-click']}>
+                <p>To sign-up click on the link below</p>
+                <a
+                  onClick={() => {
+                    showSignUpOrIn(signInEle, signUpEle, 'signin');
+                  }}>
+                  Click here to register
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -146,17 +146,17 @@ function loginOnSubmit(e, signIn) {
 function showSignUpOrIn(signInElement, signUpElement, from) {
   if (from === 'signup') {
     //want to show sign in
-    signInElement.current.classList.remove(styles.hide);
-    signUpElement.current.classList.remove(styles.show);
-    signInElement.current.classList.add(styles.show);
-    signUpElement.current.classList.add(styles.hide);
+    signInElement.current.classList.remove('hide');
+    signUpElement.current.classList.remove('show');
+    signInElement.current.classList.add('show');
+    signUpElement.current.classList.add('hide');
   }
 
   if (from === 'signin') {
     //want to show sign up
-    signInElement.current.classList.remove(styles.show);
-    signUpElement.current.classList.remove(styles.hide);
-    signInElement.current.classList.add(styles.hide);
-    signUpElement.current.classList.add(styles.show);
+    signInElement.current.classList.remove('show');
+    signUpElement.current.classList.remove('hide');
+    signInElement.current.classList.add('hide');
+    signUpElement.current.classList.add('show');
   }
 }

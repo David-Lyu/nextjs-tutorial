@@ -1,0 +1,44 @@
+.profile-parent {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin: 0.2em;
+}
+
+.profile-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-icon > :first-child {
+  height: 30px;
+  width: 30px;
+  border: 1px solid black;
+  border-radius: 100px;
+}
+
+.profile-options {
+  position: relative;
+}
+
+.profile-options > * {
+  position: absolute;
+  background-color: var(--secondary-color);
+}
+
+.profile-options > :first-child {
+  background-color: transparent;
+  inset: 0px 0 0 8px;
+  z-index: 1000;
+  color: var(--secondary-color);
+}
+
+.profile-options > :nth-child(2) {
+  inset: 10px 0 0 -60px;
+  width: 120px;
+  height: 200px;
+  border: 0.5px solid #808080;
+  border-radius: 3px;
+}

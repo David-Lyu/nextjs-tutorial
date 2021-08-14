@@ -15,7 +15,7 @@ export default function Header(props) {
       <div className={`container ${styles.nav}`}>
         <Link href={homePage} passHref>
           <h3 className={styles.name}>
-            <a>Header</a>
+            <a>Social Media</a>
           </h3>
         </Link>
         <div className={styles.links}>

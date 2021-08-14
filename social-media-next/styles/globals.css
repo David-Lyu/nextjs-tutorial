@@ -5,12 +5,6 @@ span,
 applet,
 object,
 iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 p,
 blockquote,
 pre,
@@ -166,6 +160,13 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+/* Custom CSS starts here ####################################################*/
+
+:root {
+  --main-color: #00fa9a;
+  --secondary-color: #2cd3ce;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -176,6 +177,14 @@ body {
 
 .row {
   width: 90vw;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
 
 @media only screen and (max-width: 600px) {
