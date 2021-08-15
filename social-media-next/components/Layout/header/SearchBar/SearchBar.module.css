@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 2;
 }
 
 .search-input {
@@ -23,7 +22,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
   border-radius: 0 0 5px 5px;
 }
 
@@ -41,9 +39,6 @@
   border-radius: 0 0 5px 5px;
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: transparent;
-  margin: 0;
+.z-index-3 {
+  z-index: 3;
 }

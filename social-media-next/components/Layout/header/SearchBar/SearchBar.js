@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Styles from './SearchBar.module.css';
+import Overlay from '../../../modules/overlay/Overlay';
 
 export default function SearchBar(props) {
   const [searchVal, setSearchVal] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
+  const [parentZIndex, setParentZIndex] = useState('');
   const router = useRouter();
 
   async function onSearchChange(e) {
@@ -15,8 +17,14 @@ export default function SearchBar(props) {
   }
 
   useEffect(() => {
-    if (searchVal.length > 0) setIsSearchClicked(true);
-    if (!searchVal) setIsSearchClicked(false);
+    if (searchVal.length > 0) {
+      setParentZIndex(Styles['z-index-3']);
+      setIsSearchClicked(true);
+    }
+    if (!searchVal) {
+      setParentZIndex('');
+      setIsSearchClicked(false);
+    }
     if (searchVal.length < 3) return;
     //should only be sending 5 if anymore might make a page to redirect the search
     fetch('/api/user/users?searchVal=' + searchVal)
@@ -28,12 +36,13 @@ export default function SearchBar(props) {
 
   return (
     <>
-      <div className={Styles['search-bar-parent']}>
+      <div className={Styles['search-bar-parent'] + ' ' + parentZIndex}>
         <input
           className={Styles['search-input']}
           type="search"
           onChange={onSearchChange}
           value={searchVal}
+          placeholder="Search friends"
         />
         <div className={Styles['search-results']}>
           <ul className={Styles['search-ul']}>
@@ -54,8 +63,7 @@ export default function SearchBar(props) {
         </div>
       </div>
       {isSearchClicked && (
-        <div
-          className={Styles.overlay}
+        <Overlay
           onClick={() => {
             setSearchResults([]);
             setSearchVal('');

@@ -46,8 +46,9 @@
 }
 
 .rotate-caret {
-  animation-duration: 1s;
+  animation-duration: 0.2s;
   animation-name: clockwise;
+  transform: rotate(180deg);
 }
 
 @keyframes clockwise {
@@ -61,17 +62,18 @@
 }
 
 .un-rotate-caret {
-  animation-duration: 1s;
+  animation-duration: 0.2s;
   animation-name: counter-clockwise;
+  transform: rotate(0);
 }
 
 @keyframes counter-clockwise {
   from {
-    transform: rotate(0);
+    transform: rotate(180deg);
   }
 
   to {
-    transform: rotate(-180deg);
+    transform: rotate(0);
   }
 }
 
@@ -99,10 +101,6 @@ https://stackoverflow.com/questions/25863070/how-to-style-the-div-to-triangle-us
   border-radius: 3px;
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: transparent;
-  margin: 0;
+.z-index-3 {
   z-index: 3;
 }

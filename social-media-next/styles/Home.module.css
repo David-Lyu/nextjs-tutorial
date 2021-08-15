@@ -37,6 +37,10 @@
   margin-top: 1rem;
 }
 
+.register {
+  display: none;
+}
+
 .login > div {
   display: flex;
   flex-direction: column;
@@ -58,7 +62,7 @@
 .show-register-click a,
 .show-login-click a {
   cursor: pointer;
-  color: var(--secondary-color);
+  color: var(--tertiary-color);
 }
 
 /* These 2 below is to toggle the signin and up options */

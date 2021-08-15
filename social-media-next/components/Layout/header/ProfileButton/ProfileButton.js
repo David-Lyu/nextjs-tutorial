@@ -3,6 +3,7 @@ import { GoPerson } from 'react-icons/go';
 import { AiFillCaretUp, AiOutlineCaretDown } from 'react-icons/ai';
 import Image from 'next/image';
 import styles from './ProfileButton.module.css';
+import Overlay from '../../../modules/overlay/Overlay';
 
 import ProfileOptions from './ProfileOptions';
 //going to add another hidden modal so we can click out and it goes away
@@ -10,10 +11,17 @@ export default function ProfileButton(props) {
   const { userId, profilePic } = props;
   const [showOptions, setShowOptions] = useState('hide');
   const [rotateCaretClass, setRotateCaretClass] = useState('');
+  const [parentZIndex, setParentZIndex] = useState('');
 
   useEffect(() => {
-    if (showOptions === 'hide') setRotateCaretClass(styles['un-rotate-caret']);
-    if (showOptions === 'show') setRotateCaretClass(styles['rotate-caret']);
+    if (showOptions === 'hide') {
+      setParentZIndex('');
+      setRotateCaretClass(styles['un-rotate-caret']);
+    }
+    if (showOptions === 'show') {
+      setParentZIndex(styles['z-index-3']);
+      setRotateCaretClass(styles['rotate-caret']);
+    }
   }, [showOptions]);
 
   function onDisplayClick(e) {
@@ -23,11 +31,12 @@ export default function ProfileButton(props) {
 
   return (
     <>
-      <div className={styles['profile-parent']}>
+      <div className={styles['profile-parent'] + ' ' + parentZIndex}>
         <div className={styles['profile-icon']} onClick={onDisplayClick}>
           {profilePic && <Image src={profilePic} alt="profile picture" />}
           {!profilePic && <GoPerson />}
-          <AiOutlineCaretDown className={rotateCaretClass} />
+          {/* <AiOutlineCaretDown className={rotateCaretClass} /> */}
+          <AiFillCaretUp className={rotateCaretClass} />
         </div>
         <div className={styles['profile-options'] + ' ' + showOptions}>
           <AiFillCaretUp />
@@ -35,8 +44,7 @@ export default function ProfileButton(props) {
         </div>
       </div>
       {showOptions === 'show' && (
-        <div
-          className={styles.overlay}
+        <Overlay
           onClick={() => {
             setShowOptions('hide');
           }}

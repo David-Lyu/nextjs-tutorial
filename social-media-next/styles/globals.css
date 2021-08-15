@@ -163,8 +163,14 @@ body {
 /* Custom CSS starts here ####################################################*/
 
 :root {
-  --main-color: #00fa9a;
-  --secondary-color: #2cd3ce;
+  --main-color: #12c2e9;
+  --secondary-color: #f64f59;
+  --tertiary-color: #c471ed;
+  --color: #29323c;
+}
+
+body {
+  color: var(--color);
 }
 
 .container {
@@ -180,6 +186,9 @@ body {
   width: 90vw;
 }
 
+/* Specify html element because of cascade in Home.module.css .register*/
+div.show,
+section.show,
 .show {
   display: block;
 }
