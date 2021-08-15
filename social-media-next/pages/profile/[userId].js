@@ -103,7 +103,11 @@ export default function GetMyUserPage(props) {
         <button disabled={isFormDisable}>Submit</button>
       </form>
       <div>Portfolio</div>
-      <Dashboard user={props.session.user} reRender={reRender} />
+      <Dashboard
+        user={props.session.user}
+        reRender={reRender}
+        url={`/api/user/posts/get/getEvery`}
+      />
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import styles from './Dashboard.module.css';
 
 //this should be either client side or rendered with server-side
 //might be just a component
 //should get id of user wanting to display
-export default React.memo(function Dashboard({ user, reRender }) {
+export default React.memo(function Dashboard({ user, reRender, url }) {
   const userId = user.id;
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -11,7 +12,7 @@ export default React.memo(function Dashboard({ user, reRender }) {
   useEffect(() => {
     //client side rendering to get post based on user id or profile id
     //want to use swr eventually
-    fetch(`/api/user/posts/get/${userId}`)
+    fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
@@ -20,12 +21,13 @@ export default React.memo(function Dashboard({ user, reRender }) {
       })
       .catch(console.error);
     // eslint-disable-next-line
-  }, [reRender]);
+  }, [reRender, userId]);
 
   return (
     <div>
       {!isLoaded && <div>Loading screen</div>}
-      {isLoaded && (
+      {!isLoaded && !posts.length && <div>No posts</div>}
+      {isLoaded && posts.length && (
         <ul>
           {posts.map((post) => {
             return <li key={post._id}>{post.message}</li>;

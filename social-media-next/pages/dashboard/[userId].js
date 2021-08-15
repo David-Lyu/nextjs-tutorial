@@ -1,8 +1,18 @@
+import { useRouter } from 'next/router';
 import Dashboard from '../../components/modules/user-page/Dashboard';
 
-export default function getOtherUserPage(props) {
-  const user = { id: '61096c082e91882d00ea33b9' };
-  return <Dashboard user={user} />;
+export default function GetOtherUserPage(props) {
+  const router = useRouter();
+  console.log(router);
+  const user = { id: router.query.userId };
+  const url = `/api/user/posts/get/${user.id}`;
+
+  return (
+    <>
+      <p>{'Inside' + ' ' + user.id}</p>
+      <Dashboard user={user} url={url} />
+    </>
+  );
 }
 
 // export async function getServerSideProps(context) {}
