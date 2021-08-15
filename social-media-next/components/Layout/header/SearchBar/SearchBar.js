@@ -16,7 +16,23 @@ export default function SearchBar(props) {
     setSearchVal(e.currentTarget.value);
   }
 
+  // handles the click or enter press of the search results
+  function handleClickOrPress(e, result) {
+    if ((e.type === 'keyup' && e.key === 'Enter') || e.type === 'click') {
+      onClickSearched(router, result.id, setSearchResults);
+      setIsSearchClicked(false);
+      setSearchVal('');
+    }
+  }
+  // handles the key press of escape to clear input
+  function handleInputOnKeyUp(e) {
+    if (e.type === 'keyup' && e.key === 'Escape') {
+      setSearchVal('');
+    }
+  }
+
   useEffect(() => {
+    console.log(searchVal);
     if (searchVal.length > 0) {
       setParentZIndex(Styles['z-index-3']);
       setIsSearchClicked(true);
@@ -24,6 +40,7 @@ export default function SearchBar(props) {
     if (!searchVal) {
       setParentZIndex('');
       setIsSearchClicked(false);
+      setSearchResults([]);
     }
     if (searchVal.length < 3) return;
     //should only be sending 5 if anymore might make a page to redirect the search
@@ -43,6 +60,7 @@ export default function SearchBar(props) {
           onChange={onSearchChange}
           value={searchVal}
           placeholder="Search friends"
+          onKeyUp={handleInputOnKeyUp}
         />
         <div className={Styles['search-results']}>
           <ul className={Styles['search-ul']}>
@@ -50,11 +68,9 @@ export default function SearchBar(props) {
               return (
                 <li
                   key={result.id}
-                  onClick={(e) => {
-                    onClickSearched(router, result.id, setSearchResults);
-                    setIsSearchClicked(false);
-                    setSearchVal('');
-                  }}>
+                  tabIndex="0"
+                  onClick={(e) => handleClickOrPress(e, result)}
+                  onKeyUp={(e) => handleClickOrPress(e, result)}>
                   {helpSetName(result)}
                 </li>
               );

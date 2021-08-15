@@ -160,12 +160,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Custom CSS starts here ####################################################*/
 
 :root {
-  --main-color: #12c2e9;
-  --secondary-color: #f64f59;
-  --tertiary-color: #c471ed;
+  --main-color: #2980b9;
+  --secondary-color: #6dd5fa;
+  --tertiary-color: #ffffff;
   --color: #29323c;
 }
 

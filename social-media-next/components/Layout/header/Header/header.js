@@ -13,10 +13,10 @@ export default function Header(props) {
   return (
     <nav className={styles['super-nav']}>
       <div className={`container ${styles.nav}`}>
-        <Link href={homePage} passHref>
-          <h3 className={styles.name}>
-            <a>Social Media</a>
-          </h3>
+        <Link href={homePage} passHref={true}>
+          <a tabIndex="0">
+            <h3 className={styles.name}>Social Media</h3>
+          </a>
         </Link>
         <div className={styles.links}>
           <SearchBar />

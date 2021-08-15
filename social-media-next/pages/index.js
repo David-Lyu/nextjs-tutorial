@@ -102,10 +102,19 @@ export default function Home(props) {
               <p>Or signin/signup with these:</p>
               <div className={styles['svg-icons']}>
                 <AiFillGithub
+                  role="link"
+                  tabIndex="0"
                   onClick={() => signIn('github')}
+                  onKeyUp={(e) => handleClickOrPress(e, () => signIn('github'))}
                   aria-label="GitHub"
                 />
-                <AiOutlineMail onClick={() => signIn()} aria-label="email" />
+                <AiOutlineMail
+                  role="link"
+                  tabIndex="0"
+                  onClick={() => signIn()}
+                  aria-label="email"
+                  onKeyUp={(e) => handleClickOrPress(e, () => signIn())}
+                />
               </div>
               {/* This is hidden till <600px */}
               <div className={styles['show-register-click']}>
@@ -158,5 +167,14 @@ function showSignUpOrIn(signInElement, signUpElement, from) {
     signUpElement.current.classList.remove('hide');
     signInElement.current.classList.add('hide');
     signUpElement.current.classList.add('show');
+  }
+}
+
+function handleClickOrPress(e, ...functions) {
+  // console.log(functions);
+  if ((e.type === 'keyup' && e.key === 'Enter') || e.type === 'click') {
+    for (const callable of functions) {
+      callable();
+    }
   }
 }
