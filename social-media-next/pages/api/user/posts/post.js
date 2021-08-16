@@ -5,7 +5,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'invalid method' });
   }
   const data = req.body;
-  console.log(data);
 
   const clientConnect = await Client.connect();
   const db = await clientConnect.db('next-social');

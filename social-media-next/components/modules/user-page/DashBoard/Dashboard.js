@@ -25,7 +25,7 @@ export default React.memo(function Dashboard({ user, reRender, url }) {
     // eslint-disable-next-line
   }, [reRender, userId]);
 
-  if (!isLoaded) {
+  if (!isLoaded || posts === 'undefined') {
     return <div>Loading screen</div>;
   }
 

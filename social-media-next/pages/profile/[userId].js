@@ -30,7 +30,7 @@ export default function GetMyUserPage(props) {
         'Content-Type': 'application/json'
       }
     };
-    fetch('/api/user/posts/post', config)
+    fetch('/api/user/posts/post/', config)
       .then((response) => {
         return response.json();
       })
@@ -106,7 +106,7 @@ export default function GetMyUserPage(props) {
       <Dashboard
         user={props.session.user}
         reRender={reRender}
-        url={`/api/user/posts/get/getEvery`}
+        url={`/api/user/posts/get/get-every/${props.session.user.id}`}
       />
     </div>
   );
