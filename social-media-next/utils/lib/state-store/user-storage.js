@@ -4,7 +4,8 @@ export const initialState = {
   token: null,
   user: {
     username: ''
-  }
+  },
+  searchedUser: null
 };
 
 export const reducer = (state, action) => {
@@ -13,6 +14,9 @@ export const reducer = (state, action) => {
       return { ...state, token: action.payload };
     case 'logout':
       return initialState;
+    case 'searchedUser': {
+      return { ...state, searchedUser: action.payload };
+    }
   }
 };
 export const StateContext = createContext();

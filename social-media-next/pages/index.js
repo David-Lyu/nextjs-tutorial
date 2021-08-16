@@ -21,11 +21,12 @@ export default function Home(props) {
   const signUpEle = useRef(null);
   const signInEle = useRef(null);
 
-  console.log(session);
-
   let id = session?.user.urlPath || session?.user.id;
   //can change callback from nextjs will work on this later
-  if (session) router.push('/profile/' + id);
+  if (session) {
+    router.push('/profile/' + id);
+    // router.push('/profile/' + id, '/profile/' + session.user.name);
+  }
 
   //Form components
   const LOGIN_CONFIG = Object.freeze({

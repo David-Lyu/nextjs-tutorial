@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Styles from './SearchBar.module.css';
 import Overlay from '../../../modules/overlay/Overlay';
+import { DispatchContext } from '../../../../utils/lib/state-store/user-storage';
 
 export default function SearchBar(props) {
   const [searchVal, setSearchVal] = useState('');
@@ -12,6 +13,9 @@ export default function SearchBar(props) {
   const [parentZIndex, setParentZIndex] = useState('');
   const router = useRouter();
 
+  const appDispatch = useContext(DispatchContext);
+  // const appState = useContext(StateContext);
+
   async function onSearchChange(e) {
     setSearchVal(e.currentTarget.value);
   }
@@ -19,9 +23,10 @@ export default function SearchBar(props) {
   // handles the click or enter press of the search results
   function handleClickOrPress(e, result) {
     if ((e.type === 'keyup' && e.key === 'Enter') || e.type === 'click') {
-      onClickSearched(router, result.id, setSearchResults);
+      onClickSearched(router, result, setSearchResults);
       setIsSearchClicked(false);
       setSearchVal('');
+      appDispatch({ type: 'searchedUser', payload: result });
     }
   }
   // handles the key press of escape to clear input
@@ -110,7 +115,8 @@ function helpSetName(result) {
   }
 }
 
-function onClickSearched(router, id, setSearchResults) {
+function onClickSearched(router, result, setSearchResults) {
   setSearchResults([]);
-  router.push(`/dashboard/${id}`);
+  const query = { firstName: result.firstName, lastName: result.lastName };
+  router.push(`/dashboard/${result.id}`, null, query);
 }

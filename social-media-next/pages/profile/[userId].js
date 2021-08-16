@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import storage from '../../utils/lib/firebase/firebase';
-import Dashboard from '../../components/modules/user-page/Dashboard';
+import Dashboard from '../../components/modules/user-page/Dashboard/Dashboard';
 
 export default function GetMyUserPage(props) {
   const postTextRef = useRef('');

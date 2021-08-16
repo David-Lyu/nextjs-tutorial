@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css';
 
+import Card from './Card/Card';
+
 //this should be either client side or rendered with server-side
 //might be just a component
 //should get id of user wanting to display
@@ -30,7 +32,11 @@ export default React.memo(function Dashboard({ user, reRender, url }) {
       {isLoaded && posts.length && (
         <ul>
           {posts.map((post) => {
-            return <li key={post._id}>{post.message}</li>;
+            return (
+              <li key={post._id}>
+                <Card post={post}>{post.message}</Card>
+              </li>
+            );
           })}
         </ul>
       )}
