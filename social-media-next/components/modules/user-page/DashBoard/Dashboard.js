@@ -25,16 +25,19 @@ export default React.memo(function Dashboard({ user, reRender, url }) {
     // eslint-disable-next-line
   }, [reRender, userId]);
 
+  if (!isLoaded) {
+    return <div>Loading screen</div>;
+  }
+
   return (
-    <div>
-      {!isLoaded && <div>Loading screen</div>}
-      {!isLoaded && !posts.length && <div>No posts</div>}
-      {isLoaded && posts.length && (
+    <div className={styles['dashboard-module']}>
+      {!posts.length && <div>No posts</div>}
+      {!!posts.length && (
         <ul>
           {posts.map((post) => {
             return (
               <li key={post._id}>
-                <Card post={post}>{post.message}</Card>
+                <Card post={post} />
               </li>
             );
           })}
