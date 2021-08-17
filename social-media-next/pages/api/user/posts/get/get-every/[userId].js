@@ -6,7 +6,6 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'method not allowed' });
   }
   const id = req.query.userId;
-  console.log(id);
 
   const clientConnect = await Client.connect();
   const db = await clientConnect.db('next-social');
@@ -23,16 +22,15 @@ export default async function handler(req, res) {
 
   const results = [];
 
-  console.log(user);
-
   await posts.forEach((post) => {
-    results.push({ post });
+    results.push(post);
   });
 
   await myPosts.forEach((post) => {
-    results.push({ post });
+    results.push(post);
   });
 
+  console.log(results);
   //need to filter posts
 
   res.status(200).json({ posts: results });

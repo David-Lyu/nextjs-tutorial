@@ -1,0 +1,19 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.profile-container > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-inputs {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}

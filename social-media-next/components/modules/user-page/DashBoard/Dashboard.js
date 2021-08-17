@@ -17,7 +17,6 @@ export default React.memo(function Dashboard({ user, reRender, url }) {
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         setIsLoaded(true);
         setPosts(data.posts);
       })
@@ -35,6 +34,7 @@ export default React.memo(function Dashboard({ user, reRender, url }) {
       {!!posts.length && (
         <ul>
           {posts.map((post) => {
+            console.log(post);
             return (
               <li key={post._id}>
                 <Card post={post} />

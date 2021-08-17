@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import styles from './Card.module.css';
 
-export default function Card({ post, children }) {
+export default function Card({ post }) {
   const { message, image } = post;
-
-  console.log(message, image);
 
   return (
     <div className={styles['card-container']}>
