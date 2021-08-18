@@ -10,9 +10,9 @@ export default function GetOtherUserPage(props) {
   const [session, loading] = useSession();
   const [isFriend, setIsFriend] = useState(false);
   const [isUser, setIsUser] = useState(false);
-  console.log(session, !isFriend);
+  // console.log(session, !isFriend);
 
-  console.log(isFriend);
+  console.log(session.user.friends);
 
   const { userId, firstName } = router.query;
   const lastName =
@@ -21,28 +21,67 @@ export default function GetOtherUserPage(props) {
   const url = `/api/user/posts/get/${user.id}`;
 
   useEffect(() => {
-    if (session?.user?.friends?.contains(userId)) {
-      isFriend(true);
+    if (session?.user?.friends?.includes(userId)) {
+      setIsFriend(true);
     }
     if (session.user.id === userId) {
       setIsUser(true);
     }
+    /*eslint-disable */
   }, []);
 
-  if (!firstName) return <div>Error</div>;
+  if (!firstName) return <div>user not exists</div>;
 
   return (
     <div className={styles['dashboard-parent']}>
       <h3>{firstName + ' ' + lastName + "'s " + 'Profile'}</h3>
-      {!isUser && session && !isFriend && <button>Add Friend</button>}
-      {!isUser && session && isFriend && <button>Un-follow</button>}
+
+      {!isUser && session && !isFriend && (
+        <button onClick={() => handleAddFriendClick(userId, session.user.id)}>
+          Add Friend
+        </button>
+      )}
+
+      {!isUser && session && isFriend && (
+        <button onClick={() => handleUnFollowClick(userId, session.user.id)}>
+          Un-follow
+        </button>
+      )}
+
       <Dashboard user={user} url={url} />
     </div>
   );
 }
 
+function handleAddFriendClick(friendId, userId) {
+  console.log('inside add click');
+  const data = { friendId, userId };
+  console.log(data);
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ friendId, userId })
+  };
+  fetch('/api/user/friend', options).then((resp) => console.log(resp));
+  //put method url: /api/user/friend
+}
+
+function handleUnFollowClick(friendId, userId) {
+  console.log('inside un-follow click');
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ friendId, userId })
+  };
+  fetch('/api/user/friend', options).then((resp) => console.log(resp));
+  // a delete method url : /api/user/friend
+}
+
 // export async function getServerSideProps({ req, res }) {
-//   const csrfToken = await getCsrfToken({ req });
 //   //put redirect if user is logged in or is csrfToken is truthy
 
 //   console.log(csrfToken);

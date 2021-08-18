@@ -30,7 +30,6 @@ export default async function handler(req, res) {
     results.push(post);
   });
 
-  console.log(results);
   //need to filter posts
 
   res.status(200).json({ posts: results });

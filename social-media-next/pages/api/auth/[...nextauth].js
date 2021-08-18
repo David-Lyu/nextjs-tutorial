@@ -58,7 +58,11 @@ const options = {
       return session;
     },
     async jwt(token, user, profile, isNewUser) {
-      if (user) token.id = user._id;
+      console.log(user);
+      if (user) {
+        token.id = user._id;
+        token.friends = user.friends;
+      }
       return token;
     }
   },
