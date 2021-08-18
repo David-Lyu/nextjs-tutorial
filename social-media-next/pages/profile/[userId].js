@@ -94,7 +94,7 @@ export default function GetMyUserPage(props) {
     <div className={styles['profile-container']}>
       <form onSubmit={onPostSubmit}>
         <div className={styles['post-inputs']}>
-          <label htmlFor="post-input">Text</label>
+          <label htmlFor="post-input">Message: </label>
           <input type="text" id="post-input" ref={postTextRef} required></input>
           <div className={styles['post-file-input']}>
             <label htmlFor="post-image" className={styles['post-file-label']}>
@@ -111,7 +111,7 @@ export default function GetMyUserPage(props) {
         </div>
         <button disabled={isFormDisable}>Submit</button>
       </form>
-      <div>Portfolio</div>
+      <h4>Posts</h4>
       <Dashboard
         user={props.session.user}
         reRender={reRender}

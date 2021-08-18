@@ -118,5 +118,9 @@ function helpSetName(result) {
 function onClickSearched(router, result, setSearchResults) {
   setSearchResults([]);
   const query = { firstName: result.firstName, lastName: result.lastName };
-  router.push(`/dashboard/${result.id}`, null, query);
+  router.push(
+    `/dashboard/${result.id}?firstName=${result.firstName}&&lastName=${result.lastName}`,
+    null,
+    query
+  );
 }

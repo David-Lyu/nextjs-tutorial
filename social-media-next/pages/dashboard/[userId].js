@@ -10,21 +10,15 @@ import { StateContext } from '../../utils/lib/state-store/user-storage';
 export default function GetOtherUserPage(props) {
   const router = useRouter();
   const [session, loading] = useSession();
-  const appState = useContext(StateContext).searchedUser;
-  let id = session?.user.urlPath || session?.user.id;
+  const { userId, firstName } = router.query;
 
-  useEffect(() => {
-    if (!appState && !session) router.push('/');
-    if (!appState && session) router.push('/profile/' + id);
-  }, []);
+  const lastName =
+    router.query.lastName !== 'undefined' ? router.query.lastName : '';
 
-  const firstName = appState?.firstName;
-  const lastName = appState?.lastName ? appState.lastName : '';
-
-  const user = { id: router.query.userId };
+  const user = { id: userId };
   const url = `/api/user/posts/get/${user.id}`;
 
-  if (!appState) return <div>Error</div>;
+  if (!firstName) return <div>Error</div>;
 
   return (
     <div className={styles['dashboard-parent']}>
