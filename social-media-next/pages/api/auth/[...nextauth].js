@@ -30,6 +30,7 @@ const options = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials, req) {
+        //need validation
         const connectedClient = await Client.connect();
         const db = await Client.db('next-social');
         const userCollection = await db.collection('users');

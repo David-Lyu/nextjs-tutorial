@@ -5,9 +5,7 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'method not allowed' });
   }
   const { searchVal } = req.query;
-  console.log(searchVal);
   const regex = new RegExp(`.*${searchVal}.*`, 'i');
-  console.log(regex);
 
   const clientConnect = await Client.connect();
   const db = await clientConnect.db('next-social');

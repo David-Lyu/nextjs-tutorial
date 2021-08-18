@@ -34,7 +34,6 @@ export default React.memo(function Dashboard({ user, reRender, url }) {
       {!!posts.length && (
         <ul>
           {posts.map((post) => {
-            console.log(post);
             return (
               <li key={post._id}>
                 <Card post={post} />

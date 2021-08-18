@@ -137,6 +137,7 @@ export default function Home(props) {
 
 export async function getServerSideProps({ req, res }) {
   const csrfToken = await getCsrfToken({ req });
+  //put redirect if user is logged in or is csrfToken is truthy
   return {
     props: {
       csrfToken: csrfToken
