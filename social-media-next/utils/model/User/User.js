@@ -8,14 +8,14 @@ class User extends Adapters.TypeORM.Models.User.model {
     emailVerified,
     firstName,
     lastName,
-    userType,
-    friends
+    userType
+    // friends
   ) {
     super(name, email, image, emailVerified);
     if (firstName) this.firstName = firstName;
     if (lastName) this.lastName = lastName;
     if (userType) this.userType = userType;
-    if (friends) this.friends = friends;
+    // if (friends) this.friends = friends;
   }
 }
 
@@ -40,11 +40,11 @@ const UserSchema = {
     userType: {
       type: 'varchar',
       nullable: true
-    },
-    friends: {
-      type: 'array',
-      nullable: true
     }
+    // friends: {
+    //   type: 'array',
+    //   nullable: true
+    // }
   }
 };
 

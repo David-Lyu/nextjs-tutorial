@@ -9,15 +9,26 @@ export default async function handler(req, res) {
 
   const clientConnect = await Client.connect();
   const db = await clientConnect.db('next-social');
-  const userCollection = await db.collection('users');
+  const friendCollection = await db.collection('friend');
   const postCollection = await db.collection('posts');
 
-  const user = await userCollection.findOne({ _id: ObjectID(id) });
-  const friends = user.friends;
+  const users = await friendCollection.find({
+    $or: [{ friend1Id: id }, { friend2Id: id }]
+  });
+
+  // console.log(users);
+  const friends = [];
+  await users.forEach((user) => {
+    if (user.friend1Id === id) friends.push(user.friend2Id);
+    if (user.friend2Id === id) friends.push(user.friend1Id);
+  });
+
   let posts = [];
 
   //not sure if i want their regular userId or to be ObjectID
-  if (friends) posts = await postCollection.find({ userId: { $in: friends } });
+  if (friends.length) {
+    posts = await postCollection.find({ userId: { $in: friends } });
+  }
   const myPosts = await postCollection.find({ userId: id });
 
   const results = [];

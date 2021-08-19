@@ -54,11 +54,13 @@ const options = {
       session.user = token;
       if (token.sub) {
         session.user.id = token.sub;
+        // console.log(session);
       }
       return session;
     },
     async jwt(token, user, profile, isNewUser) {
-      console.log(user);
+      //according to docs user,profile, isNewUser are only truthy
+      // when you first sign in...
       if (user) {
         token.id = user._id;
         token.friends = user.friends;
