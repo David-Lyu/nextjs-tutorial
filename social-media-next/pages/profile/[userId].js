@@ -7,6 +7,7 @@ import styles from './[userId].module.css';
 import storage from '../../utils/lib/firebase/firebase';
 import Dashboard from '../../components/modules/user-page/Dashboard/Dashboard';
 
+//look into router.replace to rerender?
 export default function GetMyUserPage(props) {
   const postTextRef = useRef('');
   const postImageRef = useRef(null);

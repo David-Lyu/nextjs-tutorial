@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './[userId].module.css';
 import Dashboard from '../../components/modules/user-page/Dashboard/Dashboard';
 
+//look into nextjs router.replace to rerender
 export default React.memo(function GetOtherUserPage(props) {
   const router = useRouter();
   const [isFriend, setIsFriend] = useState(false);
